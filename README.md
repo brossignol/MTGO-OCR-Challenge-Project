@@ -1,6 +1,6 @@
-# MTGO-OCR-Challenge
+# MTGO-OCR-Challenge-Project
 
-This hosts the code for automating OCR on MTGO challenge data screenshots.
+This uses OCR to assist with data collection of MTGO challenges and other high stake events.
 
 ## Important Information / Common Questions
 
