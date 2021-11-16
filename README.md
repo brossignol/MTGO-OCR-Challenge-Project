@@ -1,4 +1,4 @@
-# Python-OCR-Challenge
+# MTGO-OCR-Challenge
 
 This hosts the code for automating OCR on MTGO challenge data screenshots.
 
