@@ -16,7 +16,6 @@ class BotEvents(commands.Cog):
 
         print("I am ready to read images!")
 
-
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
 
@@ -35,9 +34,6 @@ class BotEvents(commands.Cog):
         else:
             # print(error)  # used for debugbing / testing
             return  # silent failure for anything else.
-
-
-
 
 
 def setup(bot):
