@@ -4,6 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+easyocr = "*"
+"discord.py" = "*"
+opencv-python = "*"
+python-decouple = "*"
 
 [dev-packages]
 
