@@ -28,11 +28,7 @@ async def run_easyocr() -> list:
     thresh, im_bw = cv2.threshold(gray_image, 165, 255, cv2.THRESH_BINARY)
     cv2.imwrite('image-final.png', im_bw)
 
-    print("reading now")
-
     reader = easyocr.Reader(['en'])
     results = reader.readtext(IMAGE_FINAL)
-
-    print("we done")
 
     return results
