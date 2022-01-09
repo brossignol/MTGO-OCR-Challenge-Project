@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
-
-from cogs.utils import cleanup
-from cogs.easyocr import generate_csv, read_image, display_easyOCR
+from cogs.easyocr import run_easyocr
 
 
 class ReadCommands(commands.Cog):
@@ -12,41 +10,48 @@ class ReadCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['Read'])
-    async def read(self, ctx, mtgo=None):
+    @commands.command(aliases=['Read', 'read'])
+    async def read_standings(self, ctx):
 
-        if mtgo == 'mtgo':
-            mtgo_data = True
-        else:
-            mtgo_data = False
-        
-        """Takes in an image, reads it, and then spits out the csv."""
+        """This takes in the image for mtgo standings,
+        and generates the csv for it."""
         try:
             image_url = ctx.message.attachments[0].url
-            if image_url[0:26] == 'https://cdn.discordapp.com' and image_url.endswith(('.jpg','.png','.jpeg')):
+            if (image_url[0:26] == 'https://cdn.discordapp.com' and
+               image_url.endswith(('.jpg', '.png', '.jpeg'))):
+
                 await ctx.send(embed=discord.Embed(
-                    title=f"Success",
+                    title="Success",
                     description="Your image will be read. Please wait.",
                     colour=discord.Color.blue()
                 ))
+
                 await ctx.message.attachments[0].save('image.png')
-                read_image(mtgo_data)
                 await ctx.send("I will now return your results.")
-                await ctx.send(file=discord.File('image-displayed.png'))
-                with open("output.csv", "rb") as file:
-                    await ctx.send("Here is your CSV file.", file=discord.File(file, "output.csv"))
+                try:
+                    results = await run_easyocr()
+                    await ctx.send(results)
+                except Exception as e:
+                    await ctx.send("failed", str(e))
             else:
                 await ctx.send(discord.Embed(
-                    title=f"Error",
+                    title="Error",
                     description="The attachment provided was not an image.",
                     colour=discord.Color.blue()
                 ))
         except IndexError:
-            await ctx.send(embed = discord.Embed(
-                title=f"Error",
+            await ctx.send(embed=discord.Embed(
+                title="Error",
                 description="No image attached.",
                 colour=discord.Color.blue()
             ))
+
+    @commands.command(aliases=['Hello'])
+    async def hello(self, ctx):
+
+        """This takes in the image for mtgo standings,
+        and generates the csv for it."""
+        await ctx.send("hello")
 
 
 def setup(bot):

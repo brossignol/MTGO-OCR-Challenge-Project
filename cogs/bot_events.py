@@ -3,7 +3,6 @@ from discord.ext import commands
 
 
 class BotEvents(commands.Cog):
-
     """This class holds all things related to bot events."""
 
     def __init__(self, bot):
@@ -11,14 +10,12 @@ class BotEvents(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-
         """Message the bot sends on startup"""
 
         print("I am ready to read images!")
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-
         """Handles various errors for user input."""
 
         if isinstance(error, commands.CommandNotFound):

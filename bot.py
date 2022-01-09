@@ -1,6 +1,7 @@
 from discord.ext import commands
 from decouple import config
 
+
 def main():
 
     """This is the main method for the bot. It creates the bot,

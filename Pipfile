@@ -8,6 +8,8 @@ easyocr = "*"
 "discord.py" = "*"
 opencv-python = "*"
 python-decouple = "*"
+flake8 = "*"
+opencv-python-headless = "==4.1.2.30"
 
 [dev-packages]
 
