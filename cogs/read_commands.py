@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from cogs.easyocr import run_easyocr
+from cogs.easyocr import run_easyocr, generate_csv
 
 
 class ReadCommands(commands.Cog):
@@ -19,7 +19,6 @@ class ReadCommands(commands.Cog):
             image_url = ctx.message.attachments[0].url
             if (image_url[0:26] == 'https://cdn.discordapp.com' and
                image_url.endswith(('.jpg', '.png', '.jpeg'))):
-
                 await ctx.send(embed=discord.Embed(
                     title="Success",
                     description="Your image will be read. Please wait.",
@@ -30,7 +29,9 @@ class ReadCommands(commands.Cog):
                 await ctx.send("I will now return your results.")
                 try:
                     results = await run_easyocr()
-                    await ctx.send(results)
+                    generate_csv(results)
+                    await ctx.send(file=discord.File('output.csv'))
+
                 except Exception as e:
                     await ctx.send("failed", str(e))
             else:

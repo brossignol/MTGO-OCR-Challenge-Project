@@ -1,6 +1,7 @@
 import easyocr
 import cv2
 from .utils import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY, IMAGE_FINAL
+from .utils import get_best_match_score, get_best_match_username
 
 
 async def run_easyocr() -> list:
@@ -32,3 +33,46 @@ async def run_easyocr() -> list:
     results = reader.readtext(IMAGE_FINAL)
 
     return results
+
+
+def correct_easyOCR(line: list):
+    """This fixes some common errors that easyOCR applies
+    to mtgo data and returns it as a corrected csv string.\n
+    These include:
+        - 21 instead of 2-1
+        - 'username 2-1' instead of 'username,2-1'
+    This returs a string csv formatted to the challenge sheet setup."""
+
+    corrected_list = []
+
+    if len(line) == 2:
+        corrected_list = line
+    if len(line) > 2:
+        corrected_list.append("".join(line[:-1]))
+        corrected_list.append(line[-1])
+    if len(corrected_list) == 2:
+        username = get_best_match_username(corrected_list[0])
+        if username[1] == 'pass':
+            return f'{username[0]},,{get_best_match_score(corrected_list[1])}'
+        else:
+            return f'{username[0]},,{get_best_match_score(corrected_list[1])},CHECK'
+    return f'{",".join(line)},,,CHECK'
+
+
+def generate_csv(results: list):
+    """generates a csv file from the results that
+    easyOCR generated. This applies fine tuning to
+    mtgo data images."""
+    line = []
+    level = 0  # used to add newline when word moves down a row
+    with open("output.csv", "w") as file:
+        for reading in results:
+            if reading[0][0][0] < level:  # we are on a new line
+                file.write(f"\n{correct_easyOCR(line)},")
+                line = []
+                line.append(reading[1])
+            else:
+                line.append(reading[1])
+            level = reading[0][0][0]
+        # for last line in file
+        file.write(f"\n{correct_easyOCR(line)},")
