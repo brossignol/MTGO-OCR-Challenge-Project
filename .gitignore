@@ -1,2 +1,4 @@
 .env
 imagedump
+*.png
+*.csv

@@ -74,5 +74,14 @@ def generate_csv(results: list):
             else:
                 line.append(reading[1])
             level = reading[0][0][0]
-        # for last line in file
-        file.write(f"{correct_easyOCR(line)}\n")
+
+
+def display_output(results: list):
+    """This displays what easyocr found 
+    for quick proof reading for the user."""
+    img = cv2.imread(IMAGE_RESIZED)
+    for result in results:
+        top_left = tuple([int(result[0][0][0]), int(result[0][0][1])])
+        bottom_right = tuple([int(result[0][2][0]), int(result[0][2][1])])
+        img = cv2.rectangle(img,top_left,bottom_right,(0,255,0),3)
+    cv2.imwrite('image-displayed.png', img)
