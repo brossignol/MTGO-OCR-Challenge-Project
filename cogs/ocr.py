@@ -4,7 +4,7 @@ from .utils import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY, IMAGE_FINAL
 from .utils import get_best_match_score, get_best_match_username
 
 
-async def run_easyocr() -> list:
+def run_easyocr() -> list:
     """This reads the uploaded image using
     easyocr and returns the easyocr generated
     list of tuples. It uses some preprocessing
