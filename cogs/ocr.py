@@ -68,11 +68,11 @@ def generate_csv(results: list):
     with open("output.csv", "w") as file:
         for reading in results:
             if reading[0][0][0] < level:  # we are on a new line
-                file.write(f"\n{correct_easyOCR(line)},")
+                file.write(f"{correct_easyOCR(line)}\n")
                 line = []
                 line.append(reading[1])
             else:
                 line.append(reading[1])
             level = reading[0][0][0]
         # for last line in file
-        file.write(f"\n{correct_easyOCR(line)},")
+        file.write(f"{correct_easyOCR(line)}\n")
