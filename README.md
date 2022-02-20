@@ -39,5 +39,25 @@ This code does the following:
 - Take in an image.
 - Modify the image using preprocessing techniques. (increase size, grayscale, threshold)
 - Pass the image to easyOCR to generate a list of tuples containing the text from the image.
-- Use some post adjustments of the data to get some better accuracy.
+- Use an existing list of valid users to compare to the output and find possible matches. This acts as an autocorrect for ocr.
+- Format the output to match the datasheet in csv formatting.
 - Convert data to a csv file and return it.
+
+# Example use case
+
+Currently, this code is written to only work on standings. This ideally will help speed up collection for those who are  
+collecting data right after an event. However, it is quite feasible to modify this to work on a full image later down the road.  
+An example image is seen below.
+
+![image](https://user-images.githubusercontent.com/82344270/154863220-5e9f4957-5fb5-495b-b389-5f0e3f6962ee.png)
+
+An example use case of this bot is shown below.
+
+![image](https://user-images.githubusercontent.com/82344270/154863495-8dac9277-dd93-48e4-84d3-7b73a1cfcc02.png)
+
+
+
+
+
+
+
