@@ -1,8 +1,7 @@
 # MTGO-OCR-Challenge-Project
 
 This uses OCR to assist with data collection of MTGO challenges and other high stake events.  
-Credit to Raptor56, PProteus, Zodiak, and Steb for working on the pauper data collection / coding over the years.
-
+Credit to Raptor56, PProteus, Zodiak, and Steb for working on the pauper data collection / coding over the years.  
 Additional thank you to all of those who take the time to fill out the data sheets every week. Without you 
 this project would not be possible.
 
