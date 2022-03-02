@@ -1,7 +1,9 @@
 # MTGO-OCR-Challenge-Project
 
 This uses OCR to assist with data collection of MTGO challenges and other high stake events.  
-Credit to Raptor56, PProteus, Zodiak, and Steb for working on the pauper data collection / coding over the years.
+Credit to Raptor56, PProteus, Zodiak, and Steb for working on the pauper data collection / coding over the years.  
+Additional thank you to all of those who take the time to fill out the data sheets every week. Without you 
+this project would not be possible.
 
 ## Important Information / Common Questions
 
@@ -37,5 +39,25 @@ This code does the following:
 - Take in an image.
 - Modify the image using preprocessing techniques. (increase size, grayscale, threshold)
 - Pass the image to easyOCR to generate a list of tuples containing the text from the image.
-- Use some post adjustments of the data to get some better accuracy.
+- Use an existing list of valid users to compare to the output and find possible matches. This acts as an autocorrect for ocr.
+- Format the output to match the datasheet in csv formatting.
 - Convert data to a csv file and return it.
+
+# Example use case
+
+Currently, this code is written to only work on standings. This ideally will help speed up collection for those who are  
+collecting data right after an event. However, it is quite feasible to modify this to work on a full image later down the road.  
+An example image is seen below.
+
+![image](https://user-images.githubusercontent.com/82344270/154863220-5e9f4957-5fb5-495b-b389-5f0e3f6962ee.png)
+
+An example use case of this bot is shown below.
+
+![image](https://user-images.githubusercontent.com/82344270/154863495-8dac9277-dd93-48e4-84d3-7b73a1cfcc02.png)
+
+
+
+
+
+
+
