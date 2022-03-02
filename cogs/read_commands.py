@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
+from decouple import config
 from cogs.ocr import display_output, run_easyocr, generate_csv
+from cogs.sheetapi import load_csv_sheet, clear_sheet
 
 
 class ReadCommands(commands.Cog):
@@ -29,10 +31,17 @@ class ReadCommands(commands.Cog):
                     results = run_easyocr()
                     generate_csv(results)
                     display_output(results)
-                    await ctx.send("I will now return your results.")
-                    await ctx.send(file=discord.File('output.csv'))
+                    clear_sheet()
+                    load_csv_sheet()
                     await ctx.send("Here is what I found.")
                     await ctx.send(file=discord.File('image-displayed.png'))
+                    await ctx.send(file=discord.File('output.csv'))
+                    description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
+                                   "\n\nYou can copy paste this into the data collection sheet." +
+                                   "\nNOTE: I am likely missing the highlighted name in the image."
+                                   "\nPlease make sure to add that before copying.")
+                    embed = discord.Embed(description=description, colour=discord.Color.blue())
+                    await ctx.send(embed=embed)
                 except Exception as e:
                     await ctx.send("failed", str(e))
             else:
