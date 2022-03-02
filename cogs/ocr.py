@@ -74,6 +74,7 @@ def generate_csv(results: list):
             else:
                 line.append(reading[1])
             level = reading[0][0][0]
+        file.write(f"{correct_easyOCR(line)}\n")
 
 
 def display_output(results: list):
