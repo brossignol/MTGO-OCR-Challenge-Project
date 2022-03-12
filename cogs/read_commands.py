@@ -57,13 +57,6 @@ class ReadCommands(commands.Cog):
                 colour=discord.Color.blue()
             ))
 
-    @commands.command(aliases=['Hello'])
-    async def hello(self, ctx):
-
-        """This takes in the image for mtgo standings,
-        and generates the csv for it."""
-        await ctx.send("hello")
-
 
 def setup(bot):
     bot.add_cog(ReadCommands(bot))
