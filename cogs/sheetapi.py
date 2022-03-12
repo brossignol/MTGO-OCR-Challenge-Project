@@ -15,22 +15,8 @@ def load_csv_sheet():
 
 def clear_sheet():
     """This clears the google sheet before adding in new data."""
-    worksheet = _load_worksheet()
-    worksheet.clear()
 
-
-def _load_worksheet():
-
-    """Gets the worksheet in our google doc
-    so we can start performing operations on it."""
-
-    # load in the credentials file / json
     serviceAccount = gspread.service_account(filename='google-credentials.json')
-
-    # grab the sheet I'm sharing by opening with the key in the url
     sheet = serviceAccount.open_by_key(config('GOOGLE_SHEET_URL_KEY'))
-
-    # grab the first sheet
     worksheet = sheet.sheet1
-
-    return worksheet
+    worksheet.clear()
