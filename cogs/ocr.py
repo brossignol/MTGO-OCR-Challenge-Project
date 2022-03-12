@@ -1,5 +1,6 @@
 import easyocr
 import cv2
+import difflib
 from .utils import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY, IMAGE_FINAL
 from .utils import get_best_match_score, get_best_match_username
 
@@ -41,6 +42,8 @@ def correct_easyOCR(line: list):
     These include:
         - 21 instead of 2-1
         - 'username 2-1' instead of 'username,2-1'
+    Additionally, it calls the difflib library to match up the 
+    model output to an existing username in our list as an autocorrect.
     This returs a string csv formatted to the challenge sheet setup."""
 
     corrected_list = []
@@ -53,9 +56,14 @@ def correct_easyOCR(line: list):
     if len(corrected_list) == 2:
         username = get_best_match_username(corrected_list[0])
         if username[1] == 'pass':
-            return f'{username[0]},,{get_best_match_score(corrected_list[1])}'
+            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}'
+        elif username[1] == 'mixed':
+            if difflib.SequenceMatcher(None, corrected_list[0], username[0][0]).ratio() == 1:
+                return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}' 
+            o_options = ' '.join(username[0][0:])
+            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},MIXED {o_options}'
         else:
-            return f'{username[0]},,{get_best_match_score(corrected_list[1])},CHECK'
+            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},CHECK'
     return f'{",".join(line)},,,CHECK'
 
 

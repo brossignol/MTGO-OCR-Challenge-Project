@@ -38,8 +38,10 @@ def get_best_match_username(username):
     possibilities = USERLIST
     n = 3
     cutoff = 0.75
-    best_match = difflib.get_close_matches(username, possibilities, n, cutoff)
-    if len(best_match) > 0:
-        return (best_match[0], 'pass')
+    best_matches = difflib.get_close_matches(username, possibilities, n, cutoff)
+    if len(best_matches) == 1:
+        return (best_matches, 'pass')
+    elif len(best_matches) > 1:
+        return (best_matches, 'mixed')
     else:
-        return (username, 'fail')
+        return ([username], 'fail')
