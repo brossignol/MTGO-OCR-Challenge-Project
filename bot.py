@@ -10,7 +10,7 @@ def main():
     bot = commands.Bot(command_prefix="!")
     bot.remove_command("help")
 
-    cogs = ['cogs.bot_events', 'cogs.read_commands']
+    cogs = ['cogs.bot_events', 'cogs.bot_commands']
 
     for cog in cogs:
         bot.load_extension(cog)
