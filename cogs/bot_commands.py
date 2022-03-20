@@ -5,9 +5,9 @@ from cogs.ocr import display_output, run_easyocr, generate_csv
 from cogs.sheetapi import load_csv_sheet, clear_sheet
 
 
-class ReadCommands(commands.Cog):
+class BotCommands(commands.Cog):
 
-    """This class holds the logic for reading images."""
+    """This class holds all of the current bot commands."""
 
     def __init__(self, bot):
         self.bot = bot
@@ -87,5 +87,14 @@ class ReadCommands(commands.Cog):
         # send message as PM
         await ctx.author.send(embed=embed)
 
+    @commands.command(aliases=['Code'])
+    async def code(self, ctx):
+        await ctx.send(embed=discord.Embed(
+            title="My Source Code!",
+            description=f"You can find my source code here: {config('SOURCE_CODE')}",
+            colour=discord.Color.blue()
+        ))
+
+
 def setup(bot):
-    bot.add_cog(ReadCommands(bot))
+    bot.add_cog(BotCommands(bot))

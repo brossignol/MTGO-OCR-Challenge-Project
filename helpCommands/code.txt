@@ -1,0 +1,7 @@
+```
+code
+
+This displays a link to my source code! Beep Boop.
+
+    example: !code
+    - Posts a link to my source code on github.```

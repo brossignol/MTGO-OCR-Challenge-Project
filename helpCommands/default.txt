@@ -14,5 +14,8 @@ collect data. Here are my commands and their parameters:
 3. help
     - Displays the helpful message you are currently seeing.
 
+4. code
+    - Displays a link to my source code.
+
 
 Type !help {command} for more info on a command.```
