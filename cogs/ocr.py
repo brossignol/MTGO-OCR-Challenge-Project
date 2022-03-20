@@ -1,7 +1,7 @@
 import easyocr
 import cv2
 import difflib
-from .utils import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY, IMAGE_FINAL
+from .utils import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY
 from .utils import get_best_match_score, get_best_match_username
 
 
@@ -33,7 +33,7 @@ def run_easyocr() -> list:
     reader = easyocr.Reader(['en'])
     results = reader.readtext(IMAGE_RESIZED)
 
-    #standardize the list of y-values so they can be used as row numbers
+    # standardize the list of y-values so they can be used as row numbers
     # pproteus wrote this
     pixel_width = im_bw.shape[0]
     CELL_WIDTH_MULTIPLIER = 1/75
@@ -43,28 +43,33 @@ def run_easyocr() -> list:
     columns = []
     for point in points:
         for row in rows:
-            if abs(sum(row)/len(row) - point[1]) < (pixel_width*CELL_HEIGHT_MULTIPLIER): #if this box is close to other boxes, add it to that bin
+            # if this box is close to other boxes, add it to that bin
+            if abs(sum(row) / len(row) - point[1]) < (pixel_width*CELL_HEIGHT_MULTIPLIER):
                 row += point[1],
                 break
-        else: #if it's not close to anybody so far, make a new bin
+        # if it's not close to anybody so far, make a new bin
+        else:
             rows += [point[1]],
 
         for column in columns:
-            if abs(sum(column)/len(column) - point[0]) < (pixel_width*CELL_WIDTH_MULTIPLIER): #if this box is close to other boxes, add it to that bin
+            # if this box is close to other boxes, add it to that bin
+            if abs(sum(column) / len(column) - point[0]) < (pixel_width*CELL_WIDTH_MULTIPLIER):
                 column += point[0],
                 break
-        else: #if it's not close to anybody so far, make a new bin
+        # if it's not close to anybody so far, make a new bin
+        else:
             columns += [point[0]],
 
-    rows =  sorted([round(sum(i)/len(i)) for i in rows]) #get a single number to represent each bin
-    columns =  sorted([round(sum(i)/len(i)) for i in columns])
+    # get a single number to represent each bin
+    rows = sorted([round(sum(i) / len(i)) for i in rows])
+    columns = sorted([round(sum(i) / len(i)) for i in columns])
 
-    #overwrite the top and left lines of the bounding boxes
+    # overwrite the top and left lines of the bounding boxes
     for result in results:
         result[0][0][1] = result[0][1][1] = min(rows, key=lambda x: abs(x - result[0][0][1]))
         result[0][0][0] = result[0][3][0] = min(columns, key=lambda x: abs(x - result[0][0][0]))
 
-    results.sort(key= lambda x: x[0][0][::-1])
+    results.sort(key=lambda x: x[0][0][::-1])
     return results
 
 
