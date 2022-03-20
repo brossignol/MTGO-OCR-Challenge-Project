@@ -1,0 +1,21 @@
+```
+read {image.png or image.jpeg}
+
+This reads an image consisting of usernames and standings
+and converts it to a csv file and google sheets. Additionally
+it will inform you about usernames that it thinks the ocr
+engine might have messed up.
+
+    example: !read {standings.png}
+    - Reads the attached image of usernames
+
+    Image Format:
+    username   x - y
+    username   x - y
+    username   x - y
+    username   x - y
+
+    Results have 3 possible outcomes
+    -   no comments --> name is likely correct
+    -   MIXED --> name could be multiple users
+    -   CHECK --> bot may have made a mistake, requires manual review```

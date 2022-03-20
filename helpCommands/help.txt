@@ -1,0 +1,14 @@
+```help {command}
+
+Displays helpful instructions on how to use my commands. :)
+
+    example: !help help
+    - You see this helpful message.
+
+    example: !help read
+    - You see the instructions on how to use the read 
+      command.
+
+    example: !help 
+    - You did not pass in any argument, so you get the
+      default help message which lists all of my commands.```

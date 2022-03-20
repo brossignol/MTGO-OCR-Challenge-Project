@@ -57,6 +57,35 @@ class ReadCommands(commands.Cog):
                 colour=discord.Color.blue()
             ))
 
+    @commands.command(aliases=['ReadFull', 'readfull'])
+    async def read_full_standings(self, ctx):
+        await ctx.send(embed=discord.Embed(
+            title="In the works",
+            description="Reading full MTGO screenshots is currently a work in progress.",
+            colour=discord.Color.blue()
+        ))
+
+    @commands.command(aliases=['help', 'Help'])
+    async def help_command(self, ctx, command: str = "default"):
+
+        """displays how to use each command for the bot.
+        By default the value is the default help command"""
+
+        try:
+            fileName = f"{command.lower()}.txt"
+            with open(f"helpCommands/{fileName}", "r") as f:
+                help_message = ''.join(f.readlines())
+        except FileNotFoundError:
+            help_message = "No command found."
+
+        # use embed discord styling for nicer display
+        embed = discord.Embed(
+            title=f"How to use: {command}" if command != "default" else "How to use me",
+            description=help_message,
+            colour=discord.Color.blue()
+        )
+        # send message as PM
+        await ctx.author.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(ReadCommands(bot))

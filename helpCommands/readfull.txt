@@ -1,0 +1,7 @@
+```
+readfull {image.png or image.jpeg}
+
+This is currently in the works. More information
+will be displayed as it continues to make progress.
+
+    example: !readfull {fullstandings.png}```

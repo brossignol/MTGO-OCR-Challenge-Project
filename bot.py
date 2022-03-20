@@ -8,6 +8,7 @@ def main():
     and loads in the commands and events from the cogs directory."""
 
     bot = commands.Bot(command_prefix="!")
+    bot.remove_command("help")
 
     cogs = ['cogs.bot_events', 'cogs.read_commands']
 

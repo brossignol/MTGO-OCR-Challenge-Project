@@ -1,0 +1,18 @@
+```I am Text Image Bot! I convert mtgo images into text to help you 
+collect data. Here are my commands and their parameters:
+
+1. read
+    - Reads an image consisting of mtgo usernames and records (x-y)
+    and converts it to a csv formatted to the data collection sheet.
+    Additionally sends a link to a google sheet with this data for
+    easy copy paste abilities.
+
+2. readfull
+    - Currently in the works. Ideally reads an entire screenshot
+    from an MTGO challenge and parses matchup info.
+
+3. help
+    - Displays the helpful message you are currently seeing.
+
+
+Type !help {command} for more info on a command.```
