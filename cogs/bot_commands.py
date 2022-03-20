@@ -41,7 +41,9 @@ class BotCommands(commands.Cog):
                                    "\nNOTE: I am likely missing the highlighted name in the image."
                                    "\nPlease make sure to add that before copying.")
                     embed = discord.Embed(description=description, colour=discord.Color.blue())
-                    await ctx.send(embed=embed)
+                    file = discord.File("assets/google-sheets-logo.png")
+                    embed.set_thumbnail(url='attachment://google-sheets-logo.png')
+                    await ctx.send(embed=embed, file=file)
                 except Exception as e:
                     await ctx.send("failed", str(e))
             else:
@@ -89,11 +91,14 @@ class BotCommands(commands.Cog):
 
     @commands.command(aliases=['Code'])
     async def code(self, ctx):
-        await ctx.send(embed=discord.Embed(
-            title="My Source Code!",
-            description=f"You can find my source code here: {config('SOURCE_CODE')}",
+        embed = discord.Embed(
+            title='My Source Code!',
+            description=f'You can find my source code here: {config("SOURCE_CODE")}',
             colour=discord.Color.blue()
-        ))
+        )
+        file = discord.File("assets/github-logo.png")
+        embed.set_thumbnail(url='attachment://github-logo.png')
+        await ctx.send(embed=embed, file=file)
 
 
 def setup(bot):
