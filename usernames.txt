@@ -39,6 +39,7 @@ _Tutenji_
 _ZNT_
 _ZodiaK
 -capivara-
+-sin
 .//Automaton
 .Martinellinho.
 10thDegree
@@ -49,6 +50,7 @@ _ZodiaK
 1yo2yo
 2radMTG
 3minem
+420dragon
 452379603
 8casper8
 9ofCups
@@ -201,6 +203,7 @@ BatraDS
 Batt456
 Baurong
 Bayesta_93
+bcs8995
 BeakerDan
 Bedell
 beekeeper
@@ -211,6 +214,7 @@ belanna999
 BelcherMage
 Beltan3
 benjamin13
+BenjiGX
 bennybo
 BennyPI
 beraldi
@@ -266,6 +270,7 @@ BOB_THE_CAT
 BobbyFoundDead
 bobjackson
 Bogardan420
+Bogdon11
 Boin
 Boland
 bolbalzak
@@ -288,6 +293,7 @@ bozo2112
 bozokaboy
 bradyoo
 brandon__logan
+Brantiano
 Brener
 BrianAMarx
 Bridgevine90
@@ -306,6 +312,7 @@ Bryant_Cook
 Bryzem1
 btail08
 Bucknasty691989
+BuddyTheFrog
 Bullwinkkle6705
 Bullz0Eye
 BungooStacker
@@ -354,6 +361,7 @@ CharLy
 cheesecake729
 Chefen
 ChefOW
+Chemist1234
 chenjesu
 chenstein9
 Cherlon
@@ -380,9 +388,12 @@ CinderDX
 citrusD
 cityofcards
 clamego
+claw8789
 claywalk33
 Clerk013
+CliffBoyardee
 Clockwork Dean
+clockzombie
 CLYDE THE GLIDE DREXLER
 cmdaywalt378
 Cobstrike
@@ -411,6 +422,7 @@ Corrado
 Corran62
 Cosanso
 Cotrin
+coughl
 CounterTopGarchomp
 cpat98
 Cr0memox
@@ -419,6 +431,7 @@ Cracudo
 CraigMack378
 Crash_CZ
 crazybaloth
+Crazyloop
 Crazzy
 CReactor
 creepevee
@@ -440,6 +453,7 @@ Cycatrix
 CyrusCG
 Czechito
 D00mwake
+Daddykarn
 Dafore
 DAfrk3in
 Damien66
@@ -461,6 +475,7 @@ Dashik
 DatabaseError
 David1987
 DavieGravie
+davy2892
 Dazai
 deadly_kick
 Deadmoney12
@@ -474,6 +489,7 @@ deleon91
 delicinha
 deluxeicoff
 delwer
+Demexus
 Demian77
 Demonmoree
 DennisReynolds
@@ -524,6 +540,7 @@ DrDree
 Dreamcrusher119
 Dreddybajs
 drevopolom
+Drizzlehell
 Drizzt253
 drklynch
 drooo75
@@ -560,6 +577,8 @@ ElAlf27
 elbirrey
 Eliason
 Eliminator
+ElkVinci
+elquinielas
 eltranco
 Ely_Silva
 ElYallo
@@ -614,6 +633,7 @@ Ferocibus
 filipacarola
 Finespoo
 fingers1991
+Fink64
 finnthewizard33
 FireCave887
 FireDrag0n
@@ -631,6 +651,7 @@ flyingspaghetti
 Fnoop
 foggmanatic
 Folero
+FourDeltaVictor
 frakom
 FranMtg
 FranPi
@@ -673,6 +694,7 @@ GeneralSCUD
 GeneralSmallChild
 generateWinner
 geneyquakes
+George_Clooners
 Gerardo94
 Gernardi
 Gerschi
@@ -699,6 +721,7 @@ gnehc
 gnorilgrande
 goblinwall
 Gobo2009
+GontiLordofStuff
 Good_Game
 gorb
 Gorb
@@ -717,10 +740,10 @@ GTX120
 GuerrieroFantasma
 guildpact_mtg
 guiyote
-Gul_Dakat
 Gul_Dukat
 gurig
 GustavoGarcia
+GustShaman
 GutoCmtt
 GYBA
 hadesblade
@@ -734,6 +757,7 @@ Happy Sandwich
 Happymil24
 HappySandwich
 HarlanMTG
+Harry13
 hateatos
 hauterho
 Hawkbundudo
@@ -827,6 +851,7 @@ ismaelstallone
 Ismguys
 itshubflower
 ItsukiS
+Ivan_Draw_Go
 Ivo_06
 IvoMV
 IWillEatYourGrandma
@@ -843,6 +868,7 @@ JackStackAttack
 Jacobisboss
 jacobricher
 jadencamelot
+JadeRabbit
 Jadisouzaft
 jahcronin
 JakeHelms
@@ -855,9 +881,11 @@ Jank_Rare
 JankYank
 jaredallsop619
 Jason_Friday13
+jasonlau
 Jayrod_Silva
 Jazza
 jbtwist
+JellyD
 Jenara19
 Jeremiahfira
 jeskaidad
@@ -894,6 +922,7 @@ jonesz8
 Jonfen
 JonTomJova
 JoragaBard
+Jordanescu
 Jorge_Jung
 JoseCabezas
 josetorr87
@@ -923,6 +952,7 @@ k00pa_king
 k1x
 K6uts
 Kadoonyec
+Kagami-Meijin
 Kaickul
 Kaies
 kaikalbuquerque
@@ -965,7 +995,6 @@ Kerrick_
 Kevinbotts
 Khorneflake
 Kihara_Works
-Kihara_works
 Killagerm
 KillerMoose91
 Killerp0p0
@@ -1025,6 +1054,7 @@ Larka
 larka
 larkblue
 Larry11
+laslanGaston
 LaturatheLucis
 laughingrock
 Lavaridge
@@ -1048,10 +1078,10 @@ LillHalonen
 lime360jr
 Linalnverse
 lindoso01
-Lindoso01
 Lintefang
 LionhearT505
 Lirek154
+litianshuo670
 littledarwin
 Littlemastercz
 littleradish
@@ -1079,6 +1109,7 @@ lostonkato
 lsmguys
 lsv
 luangne
+luanpizzio
 lucadaky
 lucajak
 Lucajak
@@ -1122,6 +1153,7 @@ Maglio90
 Mago Exaltado
 mahzinha_linda
 maian
+maikage
 majin_puar
 Makedon
 makingsmartplays
@@ -1173,6 +1205,7 @@ mattb
 MATTHEWFOULKES
 Matti
 mattjb08
+mav106
 max_9
 maximusdee
 MaxMagicer
@@ -1225,10 +1258,13 @@ Mistakenn
 MisterCimba
 Mityushka
 Miyazono
+MJ_23
 mjrace
+MK89
 MKBusiness
 MKC
 MKE
+mkeartist
 mlovbo
 MLupa
 Modern_Monkey
@@ -1250,6 +1286,7 @@ Mordeka1ser
 Morenothings
 morimon99
 Morphling_17
+Morrin2112
 morrugalactico
 Morrys
 mosskirin
@@ -1293,7 +1330,10 @@ n00bcheesepwner
 N00beliX
 N1CKLES
 N3nne
+N3to
 nabamen1
+naddyeffintabs
+Nade
 nahnahe1
 nahuel10
 Nainportepulpe
@@ -1424,7 +1464,6 @@ patrickj
 Patxi
 paucr5
 PauloCabral_Br
-PauloCabral_BR
 PauloMinhoz
 paupea-nyan-nyan
 Paupersphere
@@ -1448,6 +1487,7 @@ phill_stroud
 Phizzle
 Phokus1
 picabo
+Piccio36
 PietroSas
 piggy12
 Piglet
@@ -1458,6 +1498,7 @@ pinato
 PineyBones
 Pintogeddon2
 PintuMtg
+pirol94
 pirukuru
 Piruu
 PIVO_S_VODKOI
@@ -1466,6 +1507,7 @@ Pjotrek666
 PlichoW
 Pmizz
 pokerswizard
+Pollu
 PonderousCZ
 PonyPuddle
 poormansstrategy
@@ -1513,6 +1555,7 @@ Radziolot
 rage_hs
 Raging_Bull
 ragnaroks
+RaiderJack
 RainerZahnfall92
 RAINkratos
 raisans
@@ -1528,6 +1571,7 @@ Rav104
 RAV92
 Ravager.pe
 Ravager.pe
+ravisor
 RawwMain
 rbs1976
 RClint21
@@ -1580,6 +1624,7 @@ Ronaldo
 Rooney56
 rootpon
 roter_Erzengel
+Roundingjun001
 RoyaleWithCheeese
 RRozanski
 RubensNetto
@@ -1596,6 +1641,7 @@ sacca93
 SacredDevil
 Sacrificed
 Sad_RO_BOT
+Sahakvic
 saidin.raken
 saikyoluige
 saka429
@@ -1618,6 +1664,7 @@ SanPop
 SantoInferno
 saoli
 Sarlanga
+SauceDog
 Saviall
 Scabs
 Scalli323
@@ -1645,6 +1692,7 @@ Sephiroth89
 Sepitus
 serakki
 Serakki
+SergGold
 SFlaren
 Sfugliatella
 sgks
@@ -1726,11 +1774,13 @@ Soulstrong
 SoulStrong
 Space_Wizard
 spartano
+Spellbook_PRJ
 Spencerbot15
 Sperling
 SpicyLeche
 SpiderSpace
 Spokes
+Spoofedozer
 SpookyDictionary
 Spranklz
 Squee2006
@@ -1771,7 +1821,6 @@ sultai4lyfe
 Sunbird17
 Sunrakasha
 SuperCow12653
-SuperCowl2653
 superdan_7
 SuperTabs
 Supremoguy
@@ -1824,12 +1873,15 @@ Testacular
 Tetsubou
 Thalai
 ThaliaGo
+ThatOneLundy
 ThatswhatIsaid
 Thatted
 The_nayr
 THE_RAKE
+The_Real_DK213
 the.zzz
 TheAbsoluteMadman
+Thebigempty92
 TheBiologist
 TheDoomBlade13
 Thee_Hiatus
@@ -1854,6 +1906,7 @@ thesoulforged
 TheStoneColdNuts
 thestudygroup
 TheUnseen
+TheWalkigDude
 ThieresTMS
 ThiGuyAgain365164
 thinenagooyen
@@ -1863,6 +1916,7 @@ Thommimp
 ThornOfWrath
 thrabeninspectorarg
 ThyShuffler
+TiagoFugete
 Timcanpy
 Timr0d
 Tinkmaster
@@ -1896,10 +1950,10 @@ Traft
 Trailovsky
 TrampolineTales
 TrashBoat100
+travisthe1
 treintaycinco
 Treno
 triosk
-tristanjwl
 TristanJWL
 trM
 trollasceticftw
@@ -1976,7 +2030,6 @@ Vijay
 villadallacava
 VingadorMTG
 vini_torres
-vinitorres
 Violent_Outburst
 VipexX
 vivorilla93
@@ -2007,8 +2060,10 @@ WhiteHatHatter
 WhitePresEnix777
 wicked95
 Wilcomax
+Willborgo
 willoneil
 willpulliam
+Willythoctar
 wiltay0494
 Windy514
 WingedHussar
@@ -2030,6 +2085,7 @@ Wythe
 Wyuta
 Xadrian92
 Xaerxess
+Xaphanex
 Xenowan
 xfile
 XiCoT
@@ -2068,6 +2124,7 @@ ZarraZ
 ZeAce
 zebhillard
 ZeroTheCat
+Zerserder
 Ziene
 ziofrancone
 Ziofrancone
@@ -2081,3 +2138,5 @@ zoopfu
 ZRM8217
 zsmiley
 ZYURYO
+zyxwvutsrqpon
+zzzonkedspent
