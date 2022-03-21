@@ -92,12 +92,14 @@ def correct_easyOCR(line: list):
         corrected_list.append(line[-1])
     if len(corrected_list) == 2:
         username = get_best_match_username(corrected_list[0])
-        if username[1] == 'pass':
+        if username[1] == 'perfect':
             return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}'
+        elif username[1] == 'pass':
+            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},FIXED {corrected_list[0]} --> {username[0][0]}'
         elif username[1] == 'mixed':
             if difflib.SequenceMatcher(None, corrected_list[0], username[0][0]).ratio() == 1:
                 return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}'
-            o_options = ' '.join(username[0][0:])
+            o_options = ' vs '.join(username[0][0:])
             return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},MIXED {o_options}'
         else:
             return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},CHECK'

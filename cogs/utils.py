@@ -40,6 +40,9 @@ def get_best_match_username(username):
     cutoff = 0.75
     best_matches = difflib.get_close_matches(username, possibilities, n, cutoff)
     if len(best_matches) == 1:
+        score = difflib.SequenceMatcher(None, username, best_matches[0]).ratio()
+        if score == 1:
+            return (best_matches, 'perfect')   
         return (best_matches, 'pass')
     elif len(best_matches) > 1:
         return (best_matches, 'mixed')
