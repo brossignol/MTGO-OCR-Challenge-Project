@@ -1,10 +1,13 @@
 ```
 read {image.png or image.jpeg}
 
-This reads an image consisting of usernames and standings
-and converts it to a csv file and google sheets. Additionally
-it will inform you about usernames that it thinks the ocr
-engine might have messed up.
+This reads an image consisting of usernames and
+results and converts it to a csv file and google
+sheets. Additionally it will inform you about
+usernames that it thinks the ocr engine might
+have messed up. An example of what this image
+should look like is in the attached thumbnail
+to the right.
 
     example: !read {standings.png}
     - Reads the attached image of usernames
@@ -15,7 +18,10 @@ engine might have messed up.
     username   x - y
     username   x - y
 
-    Results have 3 possible outcomes
-    -   no comments --> name is likely correct
-    -   MIXED --> name could be multiple users
-    -   CHECK --> bot may have made a mistake, requires manual review```
+    Results have 4 possible comments
+    - no comment --> name matches existing
+                     user 100%
+    - FIXED --> name matched existing user
+                75-99% so bot changed it
+    - MIXED --> name could be multiple users
+    - CHECK --> bot may have made a mistake, requires review```
