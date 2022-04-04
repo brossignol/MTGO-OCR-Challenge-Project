@@ -92,7 +92,7 @@ class BotCommands(commands.Cog):
             embed.set_thumbnail(url='attachment://example-image.png')
             await ctx.author.send(embed=embed, file=file)
         else:
-            await ctx.author.send(embed=embed)    
+            await ctx.author.send(embed=embed)
 
     @commands.command(aliases=['Code'])
     async def code(self, ctx):
