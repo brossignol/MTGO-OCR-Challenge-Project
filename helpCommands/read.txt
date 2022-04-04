@@ -1,22 +1,22 @@
 ```
 read {image.png or image.jpeg}
 
-This reads an image consisting of usernames and
-results and converts it to a csv file and google
-sheets. Additionally it will inform you about
-usernames that it thinks the ocr engine might
-have messed up. An example of what this image
-should look like is in the attached thumbnail
-to the right.
+This reads an image consisting of ranks,
+usernames and results and converts it to a csv
+file and google sheets. Additionally it will 
+inform you about usernames that it thinks the
+ocr engine might have messed up. An example of
+what this image should look like is in the
+attached thumbnail to the right.
 
     example: !read {standings.png}
     - Reads the attached image of usernames
 
     Image Format:
-    username   x - y
-    username   x - y
-    username   x - y
-    username   x - y
+    rank  username   x - y
+    rank  username   x - y
+    rank  username   x - y
+    rank  username   x - y
 
     Results have 4 possible comments
     - no comment --> name matches existing

@@ -2,10 +2,10 @@
 you collect data. Here are my commands and their parameters:
 
 1. read
-    - Reads an image consisting of mtgo usernames and records
-      (x-y) and converts it to a csv formatted to the data
-      collection sheet. Additionally sends a link to a google
-      sheet with this data for easy copy paste abilities.
+    - Reads an image consisting of mtgo ranks, usernames 
+      and records (x-y) and converts it to a csv formatted to
+      the data collection sheet. Additionally sends a link to
+      a google sheet with this data for easy copy paste abilities.
 
 2. readfull
     - Currently in the works. Ideally reads an entire

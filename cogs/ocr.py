@@ -3,6 +3,7 @@ import cv2
 import difflib
 from .utils import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY
 from .utils import get_best_match_score, get_best_match_username
+from .utils import get_best_match_rank, sort_eascyocr_results
 
 
 def run_easyocr() -> list:
@@ -27,83 +28,47 @@ def run_easyocr() -> list:
     cv2.imwrite(IMAGE_GRAY, gray_image)
 
     # Binary Image with Thresholding
-    thresh, im_bw = cv2.threshold(gray_image, 165, 255, cv2.THRESH_BINARY)
+    _, im_bw = cv2.threshold(gray_image, 165, 255, cv2.THRESH_BINARY)
+    pixel_width = im_bw.shape[0]
     cv2.imwrite('image-final.png', im_bw)
 
     reader = easyocr.Reader(['en'])
     results = reader.readtext(IMAGE_RESIZED)
-
-    # standardize the list of y-values so they can be used as row numbers
-    # pproteus wrote this
-    pixel_width = im_bw.shape[0]
-    CELL_WIDTH_MULTIPLIER = 1/75
-    CELL_HEIGHT_MULTIPLIER = 1/200
-    points = [i[0][0] for i in results]
-    rows = []
-    columns = []
-    for point in points:
-        for row in rows:
-            # if this box is close to other boxes, add it to that bin
-            if abs(sum(row) / len(row) - point[1]) < (pixel_width*CELL_HEIGHT_MULTIPLIER):
-                row += point[1],
-                break
-        # if it's not close to anybody so far, make a new bin
-        else:
-            rows += [point[1]],
-
-        for column in columns:
-            # if this box is close to other boxes, add it to that bin
-            if abs(sum(column) / len(column) - point[0]) < (pixel_width*CELL_WIDTH_MULTIPLIER):
-                column += point[0],
-                break
-        # if it's not close to anybody so far, make a new bin
-        else:
-            columns += [point[0]],
-
-    # get a single number to represent each bin
-    rows = sorted([round(sum(i) / len(i)) for i in rows])
-    columns = sorted([round(sum(i) / len(i)) for i in columns])
-
-    # overwrite the top and left lines of the bounding boxes
-    for result in results:
-        result[0][0][1] = result[0][1][1] = min(rows, key=lambda x: abs(x - result[0][0][1]))
-        result[0][0][0] = result[0][3][0] = min(columns, key=lambda x: abs(x - result[0][0][0]))
-
-    results.sort(key=lambda x: x[0][0][::-1])
-    return results
+    return sort_eascyocr_results(results, pixel_width)
 
 
 def correct_easyOCR(line: list):
-    """This fixes some common errors that easyOCR applies
-    to mtgo data and returns it as a corrected csv string.\n
+    """This calls the util functions to take
+    the output provided by easyOCR and use that logic
+    to correct common mistakes that are outputted.
     These include:
         - 21 instead of 2-1
         - 'username 2-1' instead of 'username,2-1'
-    Additionally, it calls the difflib library to match up the
-    model output to an existing username in our list as an autocorrect.
-    This returs a string csv formatted to the challenge sheet setup."""
+        - correcting misspelt names using difflib."""
 
-    corrected_list = []
-
-    if len(line) == 2:
-        corrected_list = line
-    if len(line) > 2:
-        corrected_list.append("".join(line[:-1]))
-        corrected_list.append(line[-1])
-    if len(corrected_list) == 2:
-        username = get_best_match_username(corrected_list[0])
+    if len(line) > 3:
+        first = line.pop(0)
+        last = line.pop()
+        middle = "".join(line)
+        line = [first, middle, last]
+    if len(line) == 3:
+        username = get_best_match_username(line[1])
+        result = (f'{get_best_match_rank(line[0])},' +
+                  f'{username[0][0]},,' +
+                  f'{get_best_match_score(line[2])}')
         if username[1] == 'perfect':
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}'
+            return result
         elif username[1] == 'pass':
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},FIXED {corrected_list[0]} --> {username[0][0]}'
+            return f'{result},FIXED {line[1]} --> {username[0][0]}'
         elif username[1] == 'mixed':
-            if difflib.SequenceMatcher(None, corrected_list[0], username[0][0]).ratio() == 1:
-                return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}'
-            o_options = ' vs '.join(username[0][0:])
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},MIXED {o_options}'
+            if difflib.SequenceMatcher(None, line[1], username[0][0]).ratio() == 1:
+                return result
+            else:
+                o_options = ' vs '.join(username[0][0:])
+                return f'{result},MIXED {o_options}'
         else:
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},CHECK'
-    return f'{",".join(line)},,,CHECK'
+            return f'{result},CHECK'
+    return f'{",".join(line)},,,,CHECK'
 
 
 def generate_csv(results: list):
