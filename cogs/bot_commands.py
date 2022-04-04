@@ -12,7 +12,7 @@ class BotCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['Read', 'read'])
+    @commands.command(aliases=['Read', 'read', 'R', 'r'])
     async def read_standings(self, ctx):
 
         """This takes in the image for mtgo standings,
