@@ -38,8 +38,8 @@ class BotCommands(commands.Cog):
                     await ctx.send(file=discord.File('output.csv'))
                     description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
                                    "\n\nYou can copy paste this into the data collection sheet." +
-                                   "\nNOTE: I am likely missing the highlighted name in the image."
-                                   "\nPlease make sure to add that before copying.")
+                                   "\nNOTE: I may have missed the highlighted name in the image."
+                                   "\nPlease review before copying.")
                     embed = discord.Embed(description=description, colour=discord.Color.blue())
                     file = discord.File("assets/google-sheets-logo.png")
                     embed.set_thumbnail(url='attachment://google-sheets-logo.png')
