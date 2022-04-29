@@ -41,7 +41,7 @@
 ## Setup steps
   1. Clone the repository to your local machine. This repository uses pipenv to manage environments and dependencies. More information about pipenv and how to use it can be found here: https://realpython.com/pipenv-guide/
 
-  2. Set up a discord bot usng the discord API. You can visit the Discord developer portal for more information. Developer Portal link: https://discord.com/developers/docs/intro
+  2. Set up a bot using the Discord API. You can visit the discord developer portal for more information. Developer Portal Link: https://discord.com/developers/docs/intro
     
   3. You will need to create a credentials.json file for the google sheets API. A good tutorial on this topic can be seen here: https://www.youtube.com/watch?v=cnPlKLEGR7E. 
 
