@@ -27,7 +27,7 @@
   - Format the output to match the datasheet in csv formatting.
   - Convert data to a csv file and return it.
 
-# Example use case
+## Example use case
   Currently, this code is written to only work on standings. This ideally will help speed up collection for those who are  
   collecting data right after an event. However, it is quite feasible to modify this to work on a full image later down the road. An example image is seen below.
 
@@ -53,7 +53,7 @@
 
   5. Finally, running 'python bot.py' should get your local instance up and running!
 
-### Future Implmenetations
+## Future Implmenetations
   Full image ocr is in the works. An example of what this will look like in the future can be seen below.
   
   ![data](https://user-images.githubusercontent.com/82344270/141873248-74b5c1ec-40de-4e42-b7b4-516aa8a55b96.png)
