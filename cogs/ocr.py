@@ -32,6 +32,19 @@ def run_easyocr() -> list:
 
     reader = easyocr.Reader(['en'])
     results = reader.readtext(IMAGE_RESIZED)
+    return sort_eacyocr(results, im_bw)
+
+
+def sort_eacyocr(results, im_bw) -> list:
+    """This function helps handle the corner case where easyOCR
+    bugs out. This bug occurs when a row has decimal values for the
+    location list in the tuple. When this occur, that row is misplaced
+    at the bottom of the outputted list, resulting in an incorrect order.
+    This fixes that by running a sort algorithm on the output.
+
+        example of bug:
+            bugged output - [1, 2, 3, 4, 2.3]
+            corrected output - [1, 2, 2.3, 3, 4]"""
 
     # standardize the list of y-values so they can be used as row numbers
     # pproteus wrote this
@@ -73,15 +86,23 @@ def run_easyocr() -> list:
     return results
 
 
-def correct_easyOCR(line: list):
-    """This fixes some common errors that easyOCR applies
-    to mtgo data and returns it as a corrected csv string.\n
-    These include:
-        - 21 instead of 2-1
-        - 'username 2-1' instead of 'username,2-1'
-    Additionally, it calls the difflib library to match up the
-    model output to an existing username in our list as an autocorrect.
-    This returs a string csv formatted to the challenge sheet setup."""
+def correct_easyOCR(line: list) -> str:
+    """This corrects common easyOCR errors and returns
+    it in the corrected csv format.
+
+    corrected errors:
+        - 'user,name,2-1' instead of 'username,2-1'
+        - incorrectly formatted results (21 vs 2-1)
+        - incorrect usernames
+
+    csv format:
+        username|archetype|record|comments
+
+    Archetype is left blank as this is not present in
+    the screenshot.
+
+    example output
+        - username,,9,1,FIXED usernam -->username"""
 
     corrected_list = []
 
@@ -93,20 +114,27 @@ def correct_easyOCR(line: list):
     if len(corrected_list) == 2:
         username = get_best_match_username(corrected_list[0])
         if username[1] == 'perfect':
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}'
-        elif username[1] == 'pass':
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},FIXED {corrected_list[0]} --> {username[0][0]}'
+            comment = ''
+        elif username[1] == 'fixed':
+            comment = f'FIXED {corrected_list[0]} --> {username[0][0]}'
         elif username[1] == 'mixed':
             if difflib.SequenceMatcher(None, corrected_list[0], username[0][0]).ratio() == 1:
-                return f'{username[0][0]},,{get_best_match_score(corrected_list[1])}'
-            o_options = ' vs '.join(username[0][0:])
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},MIXED {o_options}'
+                comment = ''
+            else:
+                mixed = ' vs '.join(username[0][0:])
+                comment = f'MIXED {mixed}'
         else:
-            return f'{username[0][0]},,{get_best_match_score(corrected_list[1])},CHECK'
-    return f'{",".join(line)},,,CHECK'
+            comment = 'CHECK'
+        username = username[0][0]
+        archetype = ''
+        record = get_best_match_score(corrected_list[1])
+        return f'{username},{archetype},{record},{comment}'
+    else:
+        # ocr screwed up big time
+        return f'{",".join(line)},,,CHECK'
 
 
-def generate_csv(results: list):
+def generate_csv(results: list) -> None:
     """generates a csv file from the results that
     easyOCR generated. This applies fine tuning to
     mtgo data images."""
@@ -124,7 +152,7 @@ def generate_csv(results: list):
         file.write(f"{correct_easyOCR(line)}\n")
 
 
-def display_output(results: list):
+def display_output(results: list) -> None:
     """This displays what easyocr found
     for quick proof reading for the user."""
     img = cv2.imread(IMAGE_RESIZED)
