@@ -23,7 +23,8 @@
   - Take in an image.
   - Modify the image using preprocessing techniques. (increase size, grayscale, threshold)
   - Pass the image to easyOCR to generate a list of tuples containing the text from the image.
-  - Use an existing list of valid users to compare to the output and find possible matches. This acts as an autocorrect for ocr.
+  - Use an existing list of valid users to compare to the output and find possible matches.  
+    This acts as an autocorrect for ocr.
   - Format the output to match the datasheet in csv formatting.
   - Convert data to a csv file and return it.
 
