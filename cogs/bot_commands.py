@@ -98,7 +98,8 @@ class BotCommands(commands.Cog):
     async def code(self, ctx):
         embed = discord.Embed(
             title='My Source Code!',
-            description=f'You can find my source code here: https://github.com/Raptor56MTG/MTGO-OCR-Challenge-Project',
+            description=('You can find my source code here:' +
+                         'https://github.com/Raptor56MTG/MTGO-OCR-Challenge-Project'),
             colour=discord.Color.blue()
         )
         file = discord.File("assets/github-logo.png")
