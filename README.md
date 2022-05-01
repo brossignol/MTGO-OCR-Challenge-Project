@@ -46,6 +46,11 @@
   - DOCS_LINK=FULL_LINK_HERE
   - GOOGLE_SHEET_URL_KEY=SHEET_KEY_HERE
 
+  - Please note the following when setting the three env variables above
+    - full link looks like this: docs.google.com/spreadsheets/d/KEY_HERE/edit?usp=sharing
+    - key is the key the link above
+  
+
   5. Finally, running 'python bot.py' should get your local instance up and running!
 
 ## Future Implmenetations
