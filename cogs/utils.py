@@ -19,7 +19,7 @@ for i in range(0, 15):
         SCORES.append(f'{i}-{j}')
 
 
-def get_best_match_score(score):
+def get_best_match_score(score: str) -> str:
     possibilities = SCORES
     n = 3
     cutoff = 0.75
@@ -30,7 +30,7 @@ def get_best_match_score(score):
         return score
 
 
-def get_best_match_username(username):
+def get_best_match_username(username: str) -> tuple:
     """This compares the username easyOCR read, with existing usernames
     in the userlist.txt file. This acts as a database lookup / autocorrect.
     This is accomplished using the difflib library which uses the Gestalt

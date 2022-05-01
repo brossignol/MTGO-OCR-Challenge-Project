@@ -35,7 +35,7 @@ def run_easyocr() -> list:
     return sort_eacyocr(results, im_bw)
 
 
-def sort_eacyocr(results, im_bw) -> list:
+def sort_eacyocr(results: list, im_bw: object) -> list:
     """This function helps handle the corner case where easyOCR
     bugs out. This bug occurs when a row has decimal values for the
     location list in the tuple. When this occur, that row is misplaced

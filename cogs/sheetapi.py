@@ -2,7 +2,7 @@ import gspread
 from decouple import config
 
 
-def load_csv_sheet():
+def load_csv_sheet() -> None:
     """This loads the outputted csv into a google sheet
     so users can copy paste the data in a sheet format easier."""
 
@@ -13,7 +13,7 @@ def load_csv_sheet():
         serviceAccount.import_csv(config('GOOGLE_SHEET_URL_KEY'), content)
 
 
-def clear_sheet():
+def clear_sheet() -> None:
     """This clears the google sheet before adding in new data."""
 
     serviceAccount = gspread.service_account(filename='google-credentials.json')
