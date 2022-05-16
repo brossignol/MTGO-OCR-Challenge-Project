@@ -4,7 +4,6 @@
 google-credentials.json
 Dockerfile
 .dockerignore
-.vscode
 !github-logo.png
 !google-sheets-logo.png
 !example-image.png
