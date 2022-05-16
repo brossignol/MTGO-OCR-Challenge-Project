@@ -1,7 +1,7 @@
 import easyocr
 import cv2
 import difflib
-from .utils import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY
+from .config import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY
 from .utils import get_best_match_score, get_best_match_username
 
 
