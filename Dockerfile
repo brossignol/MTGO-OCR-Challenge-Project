@@ -8,7 +8,9 @@ COPY Pipfile .
 COPY Pipfile.lock .
 
 RUN cd /MTGO-OCR-Challenge-Project
-RUN pip install pipenv
-RUN pipenv install
+RUN pip install -r requirements.txt
 
 COPY . .
+
+ENTRYPOINT ["python", "bot.py"]
+
