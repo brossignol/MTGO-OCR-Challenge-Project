@@ -4,8 +4,7 @@ RUN mkdir /MTGO-OCR-Challenge-Project
 
 WORKDIR /MTGO-OCR-Challenge-Project
 
-COPY Pipfile .
-COPY Pipfile.lock .
+COPY requirements.txt .
 
 RUN cd /MTGO-OCR-Challenge-Project
 RUN pip install -r requirements.txt
