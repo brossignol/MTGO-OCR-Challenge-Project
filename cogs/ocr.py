@@ -1,7 +1,6 @@
-import easyocr
 import cv2
 import difflib
-from .config import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY
+from .config import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY, reader
 from .utils import get_best_match_score, get_best_match_username
 
 
@@ -30,7 +29,6 @@ def run_easyocr() -> list:
     thresh, im_bw = cv2.threshold(gray_image, 165, 255, cv2.THRESH_BINARY)
     cv2.imwrite('image-final.png', im_bw)
 
-    reader = easyocr.Reader(['en'])
     results = reader.readtext(IMAGE_RESIZED)
     return sort_eacyocr(results, im_bw)
 
