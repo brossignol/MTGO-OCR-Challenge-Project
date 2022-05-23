@@ -1,7 +1,4 @@
 import os
-import easyocr
-
-reader = easyocr.Reader(['en'])
 
 IMAGE_PATH = 'image.png'
 IMAGE_RESIZED = 'image-resized.png'
