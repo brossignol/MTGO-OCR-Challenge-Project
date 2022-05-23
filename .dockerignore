@@ -24,3 +24,5 @@
 **/values.dev.yaml
 README.md
 LICENSE
+Pipfile
+Pipefile.lock
