@@ -148,5 +148,11 @@ def process_results(results, img_shape):
     df = place_box_in_grid(res, cols, rows)
     df = correct_detection(df)
 
-    df = list(zip(*df))  # invert col/row
     return df, (res, cols, rows)
+
+
+def generate_csv_grid(path, df):
+    with open(path, 'w') as file:
+        for row in zip(*df):
+            file.write(','.join(row) + '\n')
+
