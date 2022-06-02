@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+from cogs.utils import get_best_match_score, get_best_match_username
+
 
 def split_long_box(coord, name, score):
     """
@@ -59,7 +61,7 @@ def place_box_in_grid(res, cols, rows):
     """
     Find box placement on grid
     """
-    df = [[[] for _ in range(len(rows) + 1)] for _ in range(len(cols) + 1)]
+    grid = [[[] for _ in range(len(rows) + 1)] for _ in range(len(cols) + 1)]
 
     for r in res:
         coord, name, score = r
@@ -68,20 +70,23 @@ def place_box_in_grid(res, cols, rows):
         i = np.searchsorted(cols, int(x1), side='right')
         j = np.searchsorted(rows, int(y1), side='right')
 
-        df[i][j].append((x1, name))
+        grid[i][j].append((x1, name))
 
-    df_ = []
-    for col in df:
-        df_.append([])
+    df = []
+    for col in grid:
+        df.append([])
         for row in col:
             s = [a[1] for a in sorted(row)]
-            df_[-1].append('_'.join(s))
+            df[-1].append('_'.join(s))
 
-    df = list(zip(*df_))
+    # df = list(zip(*df))
     return df
 
 
-def display(img, res, cols, rows, ):
+def display_result(img, res, cols, rows):
+    """
+    Display boxes, columns and rows on image.
+    """
     img_ = img.copy()
     for result in res:
         top_left = tuple([int(result[0][0][0]), int(result[0][0][1])])
@@ -96,8 +101,52 @@ def display(img, res, cols, rows, ):
     return img_
 
 
+def column_type(col):
+    """
+    Assert columns type to lead autocorrection.
+    """
+    s = ''.join(col)
+    if len(s) == 0:
+        return ''
+
+    n_digits = sum(map(str.isdigit, s))
+    if n_digits < 0.3 * len(s):
+        return 'Name'
+
+    n_dash = s.count('-')
+
+    n_c = sum([c in {'0', '1', '2', '-'} for c in s])
+
+    if n_dash > 0.1 * len(s) or n_c >= 0.9 * len(s):
+        return 'Score'
+
+    return 'Rank'
+
+
+def correct_detection(df):
+    """
+    Correct ocr detection depending on column type.
+    """
+    df_ = []
+    for col in df:
+        t = column_type(col)
+        if t == 'Name':
+            df_.append([get_best_match_username(name) for name in col])
+        elif t == 'Score':
+            df_.append([get_best_match_score(score) for score in col])
+        else:
+            df_.append(col)
+    return df_
+
+
 def process_results(results, img_shape):
+    """
+    Return processed result and display argument.
+    """
     res = format_results(results)
     cols, rows = compute_grid(res, img_shape)
     df = place_box_in_grid(res, cols, rows)
-    return df, res, cols, rows
+    df = correct_detection(df)
+
+    df = list(zip(*df))  # invert col/row
+    return df, (res, cols, rows)
