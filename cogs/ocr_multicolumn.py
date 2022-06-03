@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
+import easyocr
 
+from cogs.config import IMAGE_PATH
 from cogs.utils import get_best_match_score, get_best_match_username
 
 
@@ -26,6 +28,9 @@ def split_long_box(coord, name, score):
 
 
 def format_results(results):
+    """
+    Split long box at each space.
+    """
     res = []
     for coord, name, score in results:
         if ' ' in name:
@@ -164,3 +169,31 @@ def generate_csv_grid(path, df):
         for row in zip(*df):
             file.write(','.join(row) + '\n')
 
+
+def load_image():
+    """
+    Load image and apply pre-treatment.
+    """
+    img = cv2.imread(IMAGE_PATH, cv2.IMREAD_UNCHANGED)
+    ratio = 2
+    width = int(ratio * img.shape[1])
+    height = int(ratio * img.shape[0])
+    dim = (width, height)
+    resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+    img = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
+    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    thresh, im_bw = cv2.threshold(gray_image, 165, 255, cv2.THRESH_BINARY)
+    return img, im_bw
+
+
+def run_easyocr_multi():
+    img, im_bw = load_image()
+
+    reader = easyocr.Reader(['en'])
+    results = reader.readtext(im_bw)
+
+    df, args = process_results(results, img.shape)
+    generate_csv_grid("output.csv", df)
+
+    img_res = display_result(img, *args)
+    cv2.imwrite('image-displayed.png', img_res)
