@@ -96,12 +96,12 @@ def display_result(img, res, cols, rows):
     for result in res:
         top_left = tuple([int(result[0][0][0]), int(result[0][0][1])])
         bottom_right = tuple([int(result[0][2][0]), int(result[0][2][1])])
-        img_ = cv2.rectangle(img_, top_left, bottom_right, (0, 255, 0), 3)
+        img_ = cv2.rectangle(img_, top_left, bottom_right, (0, 255, 0, 255), 3)
 
     for col in cols:
-        img_ = cv2.line(img_, (col, 0), (col, img.shape[0]), color=(0, 0, 255), thickness=3)
+        img_ = cv2.line(img_, (col, 0), (col, img.shape[0]), color=(255, 0, 0, 255), thickness=3)
     for row in rows:
-        img_ = cv2.line(img_, (0, row), (img.shape[1], row), color=(0, 0, 255), thickness=3)
+        img_ = cv2.line(img_, (0, row), (img.shape[1], row), color=(255, 0, 0, 255), thickness=3)
 
     return img_
 
@@ -183,7 +183,7 @@ def load_image():
     img = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
     gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     thresh, im_bw = cv2.threshold(gray_image, 165, 255, cv2.THRESH_BINARY)
-    return img, im_bw
+    return resized, im_bw
 
 
 def run_easyocr_multi():
@@ -192,7 +192,7 @@ def run_easyocr_multi():
     reader = easyocr.Reader(['en'])
     results = reader.readtext(im_bw)
 
-    df, args = process_results(results, img.shape)
+    df, args = process_results(results, im_bw.shape)
     generate_csv_grid("output.csv", df)
 
     img_res = display_result(img, *args)
