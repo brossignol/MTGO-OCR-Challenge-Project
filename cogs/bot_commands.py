@@ -32,6 +32,8 @@ class BotCommands(commands.Cog):
                     results = run_easyocr()
                     generate_csv(results)
                     display_output(results)
+                    clear_sheet()
+                    load_csv_sheet()
                     await ctx.send("Here is what I found.")
                     await ctx.send(file=discord.File('image-displayed.png'))
                     await ctx.send(file=discord.File('output.csv'))
@@ -74,6 +76,8 @@ class BotCommands(commands.Cog):
                 await ctx.message.attachments[0].save('image.png')
                 try:
                     run_easyocr_multi()
+                    clear_sheet()
+                    load_csv_sheet()
                     await ctx.send("Here is what I found.")
                     await ctx.send(file=discord.File('image-displayed.png'))
                     await ctx.send(file=discord.File('output.csv'))
