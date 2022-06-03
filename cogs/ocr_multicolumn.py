@@ -123,6 +123,14 @@ def column_type(col):
     return 'Rank'
 
 
+def get_best_match_score_2(score):
+    s = get_best_match_score(score.replace('Z', '2')).replace(',', '-')
+    if len(s) == 1:
+        return s + '-0'  # seems to be a common mistake
+    else:
+        return s
+
+
 def correct_detection(df):
     """
     Correct ocr detection depending on column type.
@@ -131,9 +139,9 @@ def correct_detection(df):
     for col in df:
         t = column_type(col)
         if t == 'Name':
-            df_.append([get_best_match_username(name) for name in col])
+            df_.append([get_best_match_username(name)[0][0] for name in col])
         elif t == 'Score':
-            df_.append([get_best_match_score(score) for score in col])
+            df_.append([get_best_match_score_2(score) for score in col])
         else:
             df_.append(col)
     return df_
