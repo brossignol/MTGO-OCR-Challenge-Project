@@ -122,18 +122,30 @@ def column_type(col):
 
     n_c = sum([c in {'0', '1', '2', '-'} for c in s])
 
-    if n_dash > 0.1 * len(s) or n_c >= 0.9 * len(s):
+    if n_c >= 0.9 * len(s):
         return 'Score'
+
+    if n_dash > 0.1 * len(s):
+        return 'Record'
 
     return 'Rank'
 
 
-def get_best_match_score_2(score):
-    s = get_best_match_score(score.replace('Z', '2')).replace(',', '-')
-    if len(s) == 1:
-        return s + '-0'  # seems to be a common mistake
-    else:
-        return s
+def get_best_game_score(score):
+    score = score.replace('Z', '2')
+    score = score.replace('Q', '0')
+    score = score.replace('_', '-')
+
+    if len(score) == 2:
+        score = '-'.join(score)
+
+    if len(score) == 3:
+        score = score[0] + '-' + score[2]
+
+    if score not in {'2-0', '2-1', '1-2', '0-2', '1-0', '0-1', ''}:
+        score = ''
+
+    return score
 
 
 def correct_detection(df):
@@ -145,8 +157,10 @@ def correct_detection(df):
         t = column_type(col)
         if t == 'Name':
             df_.append([get_best_match_username(name)[0][0] for name in col])
+        elif t == 'Record':
+            df_.append([get_best_match_score(score) for score in col])
         elif t == 'Score':
-            df_.append([get_best_match_score_2(score) for score in col])
+            df_.append([get_best_game_score(score) for score in col])
         else:
             df_.append(col)
     return df_
@@ -170,16 +184,16 @@ def generate_csv_grid(path, df):
             file.write(','.join(row) + '\n')
 
 
-def load_image():
+def load_image(image_path=IMAGE_PATH):
     """
     Load image and apply pre-treatment.
     """
-    img = cv2.imread(IMAGE_PATH, cv2.IMREAD_UNCHANGED)
+    img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
     ratio = 2
     width = int(ratio * img.shape[1])
     height = int(ratio * img.shape[0])
     dim = (width, height)
-    resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+    resized = cv2.resize(img, dim, interpolation=cv2.INTER_CUBIC)
     img = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
     gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     thresh, im_bw = cv2.threshold(gray_image, 165, 255, cv2.THRESH_BINARY)
