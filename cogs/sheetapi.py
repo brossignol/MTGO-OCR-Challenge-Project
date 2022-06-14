@@ -20,3 +20,9 @@ def clear_sheet() -> None:
     sheet = serviceAccount.open_by_key(config('GOOGLE_SHEET_URL_KEY'))
     worksheet = sheet.sheet1
     worksheet.clear()
+
+
+def get_sheet_by_url(url):
+    serviceAccount = gspread.service_account(filename='google-credentials.json')
+    sheet = serviceAccount.open_by_url(url)
+    return sheet

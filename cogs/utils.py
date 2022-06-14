@@ -13,6 +13,19 @@ def get_best_match_score(score: str) -> str:
         return score
 
 
+def get_best_match_score_multi(score: str, possibilities=SCORES) -> (str, str):
+    """
+    return a pair of string (win, loss).
+    """
+    n = 3
+    cutoff = 0.75
+    best_match = difflib.get_close_matches(score, possibilities, n, cutoff)
+    if len(best_match) > 0:
+        return best_match[0].split('-')
+    else:
+        return score, ''
+
+
 def get_best_match_username(username: str) -> tuple:
     """This compares the username easyOCR read, with existing usernames
     in the userlist.txt file. This acts as a database lookup / autocorrect.
@@ -46,3 +59,16 @@ def get_best_match_username(username: str) -> tuple:
         return (best_matches, 'mixed')
     else:
         return ([username], 'check')
+
+
+def get_best_match_username_standings(score: str, possibilities):
+    """
+    Version to correct standings, more permissive on errors.
+    """
+    n = 3
+    cutoff = 0.3
+    best_match = difflib.get_close_matches(score, possibilities, n, cutoff)
+    if len(best_match) > 0:
+        return best_match[0], True
+    else:
+        return score, False

@@ -3,7 +3,7 @@ import numpy as np
 import easyocr
 
 from cogs.config import IMAGE_PATH
-from cogs.utils import get_best_match_score, get_best_match_username
+from cogs.utils import get_best_match_score, get_best_match_username, get_best_match_score_multi
 
 
 def split_long_box(coord, name, score):
@@ -131,6 +131,10 @@ def column_type(col):
     return 'Rank'
 
 
+VALID_SCORES = ('2-0', '2-1', '1-2', '0-2', '1-0', '0-1')
+VALID_SCORES_SPLIT = tuple(tuple(s.split('-')) for s in VALID_SCORES)
+
+
 def get_best_game_score(score):
     score = score.replace('Z', '2')
     score = score.replace('Q', '0')
@@ -142,10 +146,10 @@ def get_best_game_score(score):
     if len(score) == 3:
         score = score[0] + '-' + score[2]
 
-    if score not in {'2-0', '2-1', '1-2', '0-2', '1-0', '0-1', ''}:
-        score = ''
+    if score not in VALID_SCORES:
+        return '', ''
 
-    return score
+    return score.split('-')
 
 
 def correct_detection(df):
@@ -158,9 +162,13 @@ def correct_detection(df):
         if t == 'Name':
             df_.append([get_best_match_username(name)[0][0] for name in col])
         elif t == 'Record':
-            df_.append([get_best_match_score(score) for score in col])
+            s0, s1 = zip(*[get_best_match_score_multi(score) for score in col])
+            df_.append(s0)
+            df_.append(s1)
         elif t == 'Score':
-            df_.append([get_best_game_score(score) for score in col])
+            s0, s1 = zip(*[get_best_game_score(score) for score in col])
+            df_.append(s0)
+            df_.append(s1)
         else:
             df_.append(col)
     return df_
@@ -184,7 +192,7 @@ def generate_csv_grid(path, df):
             file.write(','.join(row) + '\n')
 
 
-def load_image(image_path=IMAGE_PATH):
+def load_image(image_path):
     """
     Load image and apply pre-treatment.
     """
@@ -200,14 +208,14 @@ def load_image(image_path=IMAGE_PATH):
     return resized, im_bw
 
 
-def run_easyocr_multi():
-    img, im_bw = load_image()
+def run_easyocr_multi(image_path=IMAGE_PATH, output_csv="output.csv", output_image='image-displayed.png'):
+    img, im_bw = load_image(image_path)
 
     reader = easyocr.Reader(['en'])
     results = reader.readtext(im_bw)
 
     df, args = process_results(results, im_bw.shape)
-    generate_csv_grid("output.csv", df)
+    generate_csv_grid(output_csv, df)
 
     img_res = display_result(img, *args)
-    cv2.imwrite('image-displayed.png', img_res)
+    cv2.imwrite(output_image, img_res)
