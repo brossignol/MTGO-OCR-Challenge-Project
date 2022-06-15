@@ -8,6 +8,7 @@ The Google sheet is expected to have:
  * Standings must be formatted along with:
       "Rank, Name, Record-win, Record-loss, Round, Games-win, Games-loss, Round, Games-win, Games-loss, etc"
 """
+from cogs.ocr_multicolumn import generate_csv_grid
 from cogs.sheetapi import get_sheet_by_url
 from cogs.utils import get_best_match_username_standings
 
@@ -34,21 +35,21 @@ def get_standings(sheet, tab='Standings', range='L:AS'):
 
 def fix_names(standings, ref_names):
     fixed = []
-    messages = set()
-    warnings = set()
+    fixed_names = set()
+    missing_names = set()
     for col in standings:
         if col[0] in ('Name', 'Round'):
             fixed.append([col[0]])
             for name in col[1:]:
                 r, matched = get_best_match_username_standings(name, ref_names)
                 fixed[-1].append(r)
-                if not matched:
-                    warnings.add(f'missing name {name}')
+                if not matched and name != '':
+                    missing_names.add(name)
                 if name != r:
-                    messages.add(f'{name} -> {r}')
+                    fixed_names.add((name, r))
         else:
             fixed.append(col)
-    return fixed, warnings, messages
+    return fixed, missing_names, fixed_names
 
 
 def group_games_score(standings):
@@ -71,47 +72,60 @@ VALID_SCORES_SPLIT = tuple(s.split('-') for s in VALID_SCORES)
 
 
 def fix_score(standings):
-    standings = list(map(list, zip(*standings)))  # transposition
+    """
+    Fix missing score by looking at the symmetric.
+    """
+    standings = list(map(list, zip(*standings)))
     matches = group_games_score(standings)
 
-    messages = set()
-    warnings = set()
+    fixed_scores = set()
+    missing_scores = set()
     for k, vs in matches.items():
         if len(vs) != 2:
-            print('fail', k, vs)
+            pass  # nothing can be done
         else:
             s0 = vs[0][0]
             s1 = vs[1][0]
-            if sorted(s0) != sorted(s1):
-                print(k, vs)
-
+            if s0 != s1[::-1]:
                 if s0 in VALID_SCORES_SPLIT:
                     i, j = vs[1][1:]
-                    standings[i][j + 1] = s0[0]
-                    standings[i][j + 2] = s0[1]
-                    messages.add(f'fix score between {k[0]} and {k[1]}')
+                    standings[i][j + 1] = s0[1]
+                    standings[i][j + 2] = s0[0]
+                    fixed_scores.add(k)
                 elif s1 in VALID_SCORES_SPLIT:
                     i, j = vs[0][1:]
-                    standings[i][j + 1] = s1[0]
-                    standings[i][j + 2] = s1[1]
-                    messages.add(f'fix score between {k[0]} and {k[1]}')
+                    standings[i][j + 1] = s1[1]
+                    standings[i][j + 2] = s1[0]
+                    fixed_scores.add(k)
                 else:
-                    warnings.add(f'missing score between {k[0]} and {k[1]} round {k[2]}')
-    return standings, warnings, messages
+                    missing_scores.add(k)
+    return standings, missing_scores, fixed_scores
 
 
-def fix_standing(url):
+def fix_standings(url, output_csv='output.csv'):
     sheet = get_sheet_by_url(url)
     ref_names = get_ref_names(sheet)
 
     standings = get_standings(sheet)
 
-    standings, warnings_0, messages_0 = fix_names(standings, ref_names)
-    standings, warnings_1, messages_1 = fix_score(standings)
+    standings, missing_names, fixed_names = fix_names(standings, ref_names)
+    standings, missing_scores, fixed_scores = fix_score(standings)
 
-    print(warnings_0, warnings_1)
-    print(messages_0, messages_1)
+    generate_csv_grid(output_csv, zip(*standings))
 
-    return standings
+    message = [f'Missing_names: {len(missing_names)}']
+    for m in missing_names:
+        message.append(m)
+    message.append(f'\nMissing_scores: {len(missing_scores)}')
+    for m in missing_scores:
+        message.append(m)
+    message.append(f'\nFixed_names: {len(fixed_names)}')
+    for m in fixed_names:
+        message.append(f'{m[0]} -> {m[1]}')
+    message.append(f'\nFixed_scores: {len(fixed_scores)}')
+    for m in fixed_scores:
+        message.append(f'{m[0]} vs {m[1]} round {m[2]}')
+
+    return standings, '\n'.join(message)
 
 

@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 from decouple import config
+
+from cogs.fix_standings import fix_standings
 from cogs.ocr import display_output, run_easyocr, generate_csv
 from cogs.ocr_multicolumn import run_easyocr_multi
 from cogs.sheetapi import load_csv_sheet, clear_sheet
@@ -101,6 +103,38 @@ class BotCommands(commands.Cog):
             await ctx.send(embed=discord.Embed(
                 title="Error",
                 description="No image attached.",
+                colour=discord.Color.blue()
+            ))
+
+    @commands.command(aliases=['fix'])
+    async def fix_full_standings(self, ctx):
+        """This takes a link to the sheet wih standings, fix them and generates the csv for it."""
+        url = ctx.message.content.strip().split(' ')[-1]
+        if url[:39] == 'https://docs.google.com/spreadsheets/d/':
+            await ctx.send(embed=discord.Embed(
+                title="Success",
+                description="Standings will be fixed. Please wait.",
+                colour=discord.Color.blue()
+            ))
+            try:
+                s = url.split('/')
+                url = '/'.join(s[:-1]) + '/edit?usp=sharing'
+                _, message = fix_standings(url)
+                load_csv_sheet()
+                await ctx.send(message)
+                await ctx.send(file=discord.File('output.csv'))
+                description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
+                               "\n\nYou can copy paste this into the data collection sheet.")
+                embed = discord.Embed(description=description, colour=discord.Color.blue())
+                file = discord.File("assets/google-sheets-logo.png")
+                embed.set_thumbnail(url='attachment://google-sheets-logo.png')
+                await ctx.send(embed=embed, file=file)
+            except Exception as e:
+                await ctx.send("failed", str(e))
+        else:
+            await ctx.send(embed=discord.Embed(
+                title="Error",
+                description="The link is not valid",
                 colour=discord.Color.blue()
             ))
 
