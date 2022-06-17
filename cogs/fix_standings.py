@@ -27,7 +27,7 @@ def get_ref_names(sheet, tab='Input', col=2):
     return ref_names
 
 
-def get_standings(sheet, tab='Standings', range='L:AS'):
+def get_standings(sheet, tab='Standings', range='N:BD'):
     ws = sheet.worksheet(tab)
     values = ws.get_values(range)
     return list(zip(*values))
@@ -81,9 +81,11 @@ def fix_score(standings):
     fixed_scores = set()
     missing_scores = set()
     for k, vs in matches.items():
-        if len(vs) != 2:
-            pass  # nothing can be done
-        else:
+        if len(vs) == 1:
+            missing_scores.add(k)
+        elif len(vs) > 2:
+            missing_scores.add(k)
+        elif len(vs) == 2:
             s0 = vs[0][0]
             s1 = vs[1][0]
             if s0 != s1[::-1]:
@@ -103,6 +105,7 @@ def fix_score(standings):
 
 
 def fix_standings(url, output_csv='output.csv'):
+    # probably can be improved by looking at relative position
     sheet = get_sheet_by_url(url)
     ref_names = get_ref_names(sheet)
 
@@ -115,10 +118,10 @@ def fix_standings(url, output_csv='output.csv'):
 
     message = [f'Missing_names: {len(missing_names)}']
     for m in missing_names:
-        message.append(m)
+        message.append(str(m))
     message.append(f'\nMissing_scores: {len(missing_scores)}')
     for m in missing_scores:
-        message.append(m)
+        message.append(f'{m[0]} vs {m[1]} round {m[2]}')
     message.append(f'\nFixed_names: {len(fixed_names)}')
     for m in fixed_names:
         message.append(f'{m[0]} -> {m[1]}')

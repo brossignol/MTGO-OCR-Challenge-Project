@@ -84,7 +84,6 @@ def place_box_in_grid(res, cols, rows):
             s = [a[1] for a in sorted(row)]
             df[-1].append('_'.join(s))
 
-    # df = list(zip(*df))
     return df
 
 
@@ -122,7 +121,7 @@ def column_type(col):
 
     n_c = sum([c in {'0', '1', '2', '-'} for c in s])
 
-    if n_c >= 0.9 * len(s):
+    if n_c >= 0.7 * len(s):
         return 'Score'
 
     if n_dash > 0.1 * len(s):
@@ -134,11 +133,15 @@ def column_type(col):
 VALID_SCORES = ('2-0', '2-1', '1-2', '0-2', '1-0', '0-1')
 VALID_SCORES_SPLIT = tuple(tuple(s.split('-')) for s in VALID_SCORES)
 
+score_replace = [('Z', '2'), ('Q', '0'), ('_', '-'), ('L', '1'), ('_', '-'), ('4', '-1'), ('-.', '-')]
 
-def get_best_game_score(score):
-    score = score.replace('Z', '2')
-    score = score.replace('Q', '0')
-    score = score.replace('_', '-')
+
+def get_best_game_score(score: str):
+    for a, b in score_replace:
+        score = score.replace(a, b)
+
+    if score == '':
+        return '', ''
 
     if len(score) == 2:
         score = '-'.join(score)
