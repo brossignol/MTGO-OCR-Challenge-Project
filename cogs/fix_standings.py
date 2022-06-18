@@ -20,11 +20,14 @@ def get_ref_names(sheet, tab='Input', col=2):
     ws = sheet.worksheet(tab)
     ref_names = set(ws.col_values(col))
 
+    warning = None
+    if '' in ref_names:
+        warning = 'Names are missings in Input tab'
     ref_names.discard('')
     ref_names.discard('Player')
     ref_names.add('(Bye)')
 
-    return ref_names
+    return ref_names, warning
 
 
 def get_standings(sheet, tab='Standings', range='N:BD'):
@@ -107,7 +110,7 @@ def fix_score(standings):
 def fix_standings(url, output_csv='output.csv'):
     # probably can be improved by looking at relative position
     sheet = get_sheet_by_url(url)
-    ref_names = get_ref_names(sheet)
+    ref_names, warning_ref_name = get_ref_names(sheet)
 
     standings = get_standings(sheet)
 
@@ -116,7 +119,10 @@ def fix_standings(url, output_csv='output.csv'):
 
     generate_csv_grid(output_csv, zip(*standings))
 
-    message = [f'Missing_names: {len(missing_names)}']
+    message = []
+    if warning_ref_name:
+        message.append(warning_ref_name + '\n')
+    message.append(f'Missing_names: {len(missing_names)}')
     for m in missing_names:
         message.append(str(m))
     message.append(f'\nMissing_scores: {len(missing_scores)}')
