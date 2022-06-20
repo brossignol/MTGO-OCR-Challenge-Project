@@ -190,9 +190,12 @@ def process_results(results, img_shape):
 
 
 def generate_csv_grid(path, df):
-    with open(path, 'w') as file:
-        for row in zip(*df):
-            file.write(','.join(row) + '\n')
+    try:
+        with open(path, 'w') as file:
+            for row in zip(*df):
+                file.write(','.join(row) + '\n')
+    except PermissionError:
+        print('Please close output.csv')
 
 
 def load_image(image_path):
