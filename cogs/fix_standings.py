@@ -85,20 +85,21 @@ def fix_score(standings):
     matches, positions = group_games_score(standings)
 
     fixed_scores = set()
-    missings = set()
+    missing_score = set()
+    missings = []
     for (p0, rd), vs in matches.items():
         if (p0, rd) not in positions:
-            missings.add(f'Missing matches of {p0} round {rd}')
+            missings.append(f'Missing matches of {p0} round {rd}')
             continue
         i, j = positions[(p0, rd)]
 
         if len(vs) == 0:
-            missings.add(f'Missing matches of {p0} round {rd}')
+            missings.append(f'Missing matches of {p0} round {rd}')
             continue
 
         if len(vs) > 2:
             p1s = [v[0] for v in vs]
-            missings.add(f'Multiple score of {p0} vs {p1s} round {rd}')
+            missings.append(f'Multiple score of {p0} vs {p1s} round {rd}')
             continue
 
         p1s, ss = zip(*vs)
@@ -119,9 +120,9 @@ def fix_score(standings):
 
         # warnings
         if p1 is None and s is not None:
-            missings.add(f'Missing opponent of {p0} round {rd}')
+            missings.append(f'Missing opponent of {p0} round {rd}')
         elif s is None and p1 is not None:
-            missings.add(f'Missing score of {p0} vs {p1} round {rd}')
+            missing_score.add(tuple(sorted((p0, p1)) + [rd]))  # do that to avoid double warning A vs B, B vs A
 
         if len(vs) == 1:
             p1, s = vs[0]
@@ -133,8 +134,6 @@ def fix_score(standings):
             # fix player
             if p1 is not None:
                 standings[i][j] = p1
-                if s is None:
-                    missings.add(f'Missing score of {p0} vs {p1} round {rd}')
                 if len(set(p1s)) > 1:
                     fixed_scores.add(f'{p0} round {rd} -> vs {p1}')
 
@@ -142,10 +141,12 @@ def fix_score(standings):
             if s is not None:
                 standings[i][j + 1] = s[0]
                 standings[i][j + 2] = s[1]
-                if p1 is None:
-                    missings.add(f'Missing opponent player {p0} vs round {rd}')
                 if len(set(ss)) > 1:
                     fixed_scores.add(f'{p0} round {rd} -> {s[0]} {s[1]}')
+
+    for p0, p1, rd in missing_score:
+        missings.append(f'Missing score of {p0} vs {p1} round {rd}')
+
     return standings, missings, fixed_scores
 
 
@@ -159,7 +160,7 @@ def fix_standings(url, output_csv='output.csv'):
     standings, missing_names, fixed_names = fix_names(standings, ref_names)
     standings, missing_score, fixed_scores = fix_score(standings)
 
-    generate_csv_grid(output_csv, zip(*standings))
+    generate_csv_grid(output_csv, zip(*standings[1:]))
 
     message = []
     if warning_ref_name:
