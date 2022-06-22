@@ -40,7 +40,7 @@ def format_results(results):
     return res
 
 
-def compute_grid(res, img_shape):
+def compute_grid(res, img_shape, buffer=1):
     """
     Find rows and columns positions from boxes positions.
     """
@@ -50,14 +50,14 @@ def compute_grid(res, img_shape):
         coord, name, score = r
         (x1, y1), _, (x2, y2), _ = coord
 
-        xs[int(x1): int(x2)] = 1
-        ys[int(y1): int(y2)] = 1
+        xs[int(x1) + buffer: int(x2) - buffer] = 1
+        ys[int(y1) + buffer: int(y2) - buffer] = 1
 
     idx = np.where(xs)[0]
-    cols = idx[np.where(np.diff(idx) > 1)[0] + 1]
+    cols = idx[np.where(np.diff(idx) > 1)[0] + 1] - buffer
 
     idx = np.where(ys)[0]
-    rows = idx[np.where(np.diff(idx) > 1)[0] + 1]
+    rows = idx[np.where(np.diff(idx) > 1)[0] + 1] - buffer
 
     return cols, rows
 
