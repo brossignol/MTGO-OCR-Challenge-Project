@@ -37,6 +37,11 @@ def get_standings(sheet, tab='Standings', range='N:BD'):
 
 
 def fix_names(standings, ref_names):
+    """
+    Force matching with Input names
+    """
+    ref_names = {name.lower(): name for name in ref_names}
+
     fixed = []
     fixed_names = set()
     missing_names = set()
@@ -87,6 +92,7 @@ def fix_score(standings):
     fixed_scores = set()
     missing_score = set()
     missings = []
+    multiples = []
     for (p0, rd), vs in matches.items():
         if (p0, rd) not in positions:
             missings.append(f'Missing matches of {p0} round {rd}')
@@ -99,22 +105,28 @@ def fix_score(standings):
 
         if len(vs) > 2:
             p1s = [v[0] for v in vs]
-            missings.append(f'Multiple score of {p0} vs {p1s} round {rd}')
+            multiples.append(f'Multiple score of {p0} vs {p1s} round {rd}')
             continue
 
         p1s, ss = zip(*vs)
 
         # get valid score
         valid_s = set(ss).intersection(VALID_SCORES_SPLIT)
-        if len(valid_s) > 0:
-            s = valid_s.pop()
+        if len(valid_s) > 1:
+            multiples.append(f'Multiple score of {p0} round {rd}: ({valid_s})')
+            s = None
+        elif len(valid_s) == 1:
+            s = next(iter(valid_s))
         else:
             s = None
 
         # get valid opponent
         valid_p1 = set(p1s).difference({''})
-        if len(valid_p1) > 0:
-            p1 = valid_p1.pop()
+        if len(valid_p1) > 1:
+            multiples.append(f'Multiple opponent {p0} vs {valid_p1} round {rd}')
+            p1 = None
+        elif len(valid_p1) == 1:
+            p1 = next(iter(valid_p1))
         else:
             p1 = None
 
@@ -133,21 +145,21 @@ def fix_score(standings):
         elif len(vs) == 2:
             # fix player
             if p1 is not None:
-                standings[i][j] = p1
-                if len(set(p1s)) > 1:
+                if standings[i][j] != p1:
                     fixed_scores.add(f'{p0} round {rd} -> vs {p1}')
+                standings[i][j] = p1
 
             # fix score
             if s is not None:
+                if tuple(standings[i][j + 1:j + 3]) != s:
+                    fixed_scores.add(f'{p0} round {rd} -> {s[0]} {s[1]}')
                 standings[i][j + 1] = s[0]
                 standings[i][j + 2] = s[1]
-                if len(set(ss)) > 1:
-                    fixed_scores.add(f'{p0} round {rd} -> {s[0]} {s[1]}')
 
     for p0, p1, rd in missing_score:
         missings.append(f'Missing score of {p0} vs {p1} round {rd}')
 
-    return standings, missings, fixed_scores
+    return standings, multiples, missings, fixed_scores
 
 
 def fix_standings(url, output_csv='output.csv'):
@@ -158,21 +170,30 @@ def fix_standings(url, output_csv='output.csv'):
     standings = get_standings(sheet)
 
     standings, missing_names, fixed_names = fix_names(standings, ref_names)
-    standings, missing_score, fixed_scores = fix_score(standings)
+    standings, multiples, missing_score, fixed_scores = fix_score(standings)
 
     generate_csv_grid(output_csv, zip(*standings[1:]))
 
     message = []
     if warning_ref_name:
         message.append(warning_ref_name + '\n')
-    message.append(f'* Missing names: {len(missing_names)}')
-    message.extend(list(map(str, missing_names)))
-    message.append(f'\n* Missing matches/scores: {len(missing_score)}')
-    message.extend(missing_score)
-    message.append(f'\n* Fixed_names: {len(fixed_names)}')
-    message.extend(fixed_names)
-    message.append(f'\n* Fixed_scores: {len(fixed_scores)}')
-    message.extend(fixed_scores)
+    if len(missing_names) > 0:
+        message.append(f'* Missing names: {len(missing_names)}')
+        message.extend(list(map(str, missing_names)))
+    if len(multiples) > 0:
+        message.append(f'\n* Multiple matches/scores: {len(multiples)}')
+        message.extend(multiples)
+    if len(missing_score) > 0:
+        message.append(f'\n* Missing matches/scores: {len(missing_score)}')
+        message.extend(missing_score)
+    if len(fixed_names) > 0:
+        message.append(f'\n* Fixed names: {len(fixed_names)}')
+        message.extend(fixed_names)
+    if len(fixed_scores) > 0:
+        message.append(f'\n* Fixed scores: {len(fixed_scores)}')
+        message.extend(fixed_scores)
+    if len(message) == 0:
+        message = ['Standings look good']
 
     return standings, '\n'.join(message)
 
