@@ -189,10 +189,22 @@ def process_results(results, img_shape):
     return df, (res, cols, rows)
 
 
+def clean_special_character(df):
+    """
+    Remove special character to csv.
+    """
+    df_ = []
+    for col in enumerate(df):
+        df_.append([])
+        for s in col:
+            df_[-1].append(str(s).replace(',', '').replace('"', '').replace('\'', ''))
+    return df_
+
+
 def generate_csv_grid(path, df):
     try:
         with open(path, 'w') as file:
-            for row in zip(*df):
+            for row in zip(*clean_special_character(df)):
                 file.write(','.join(row) + '\n')
     except PermissionError:
         print('Please close output.csv')
