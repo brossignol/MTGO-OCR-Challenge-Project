@@ -194,7 +194,7 @@ def clean_special_character(df):
     Remove special character to csv.
     """
     df_ = []
-    for col in enumerate(df):
+    for col in df:
         df_.append([])
         for s in col:
             df_[-1].append(str(s).replace(',', '').replace('"', '').replace('\'', ''))
