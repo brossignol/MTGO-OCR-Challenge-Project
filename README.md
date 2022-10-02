@@ -33,6 +33,8 @@
 
 ![image](https://user-images.githubusercontent.com/82344270/166079889-b212033a-c2a2-4bf7-95b3-fd81fc79ee0a.png) ![image](https://user-images.githubusercontent.com/82344270/154863495-8dac9277-dd93-48e4-84d3-7b73a1cfcc02.png)
 
+A video showing a demo and process of building this code / bot can be seen here: https://www.youtube.com/watch?v=a6f8ACJ9HmM
+
 
 ## Setup steps
   1. Clone the repository to your local machine. This repository uses pipenv to manage environments and dependencies. More information about pipenv and how to use it can be found here: https://realpython.com/pipenv-guide/
