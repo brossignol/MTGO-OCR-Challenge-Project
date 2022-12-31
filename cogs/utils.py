@@ -49,13 +49,6 @@ def get_best_match_username(username: str) -> tuple:
         return ([username], 'check')
 
 
-def embed(title, description, color=discord.Color.blue()) -> object:
-    """returns a discord embed object."""
-    return discord.Embed(title=title,
-                         description=description,
-                         colour=color)
-
-
 async def image_input_validation(ctx) -> bool:
     """Determines if input is valid."""
     try:
