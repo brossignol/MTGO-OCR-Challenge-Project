@@ -57,9 +57,10 @@ async def image_input_validation(ctx) -> bool:
             await ctx.message.attachments[0].save("image.png")
             return True
         else:
-            await ctx.send(embed=discord.Embed(title="Error",
-                                               description="The attachment provided was not an image.",
-                                               colour=discord.Color.blue()))
+            await ctx.send(embed=discord.Embed(
+                                    title="Error",
+                                    description="The attachment provided was not an image.",
+                                    colour=discord.Color.blue()))
             return False
     except IndexError:
         await ctx.send(embed=discord.Embed(title="Error",

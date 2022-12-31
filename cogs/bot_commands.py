@@ -31,22 +31,23 @@ class BotCommands(commands.Cog):
             await ctx.send("Here is what I found.")
             await ctx.send(file=discord.File('image-displayed.png'))
             await ctx.send(file=discord.File('output.csv'))
-            description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
-                           "\n\nYou can copy paste this into the data collection sheet." +
-                           "\nNOTE: This google sheet will be overrided on the next call." +
-                           "\nReview and copy the sheet before the next call, or use the csv.")
-            embed = discord.Embed(description=description, colour=discord.Color.blue())
+            embed = discord.Embed(
+                title='Google Sheets Results',
+                description=(f"Google sheet copy is available here: {config('DOCS_LINK')}" +
+                             "\n\nYou can copy paste this into the data collection sheet." +
+                             "\nNOTE: This google sheet will be overrided on the next call." +
+                             "\nReview and copy the sheet before the next call, or use the csv."),
+                colour=discord.Color.blue())
             file = discord.File("assets/google-sheets-logo.png")
             embed.set_thumbnail(url='attachment://google-sheets-logo.png')
             await ctx.send(embed=embed, file=file)
 
     @commands.command(aliases=['ReadFull', 'readfull'])
     async def read_full_standings(self, ctx):
-        await ctx.send(embed=discord.Embed(
-            title="In the works",
-            description="Reading full MTGO screenshots is currently a work in progress.",
-            colour=discord.Color.blue()
-        ))
+        await ctx.send(embed=discord.Embed(title="In the works",
+                                           description=("Reading full MTGO screenshots" +
+                                                        "is currently a work in progress."),
+                                           colour=discord.Color.blue()))
 
     @commands.command(aliases=['help', 'Help'])
     async def help_command(self, ctx, command: str = "default"):
@@ -65,8 +66,7 @@ class BotCommands(commands.Cog):
         embed = discord.Embed(
             title=f"How to use: {command}" if command != "default" else "How to use me",
             description=help_message,
-            colour=discord.Color.blue()
-        )
+            colour=discord.Color.blue())
 
         if command.lower() == 'read':
             file = discord.File("assets/example-image.png")
