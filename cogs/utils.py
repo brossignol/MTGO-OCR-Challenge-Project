@@ -62,5 +62,7 @@ async def image_input_validation(ctx) -> bool:
                                                colour=discord.Color.blue()))
             return False
     except IndexError:
-        await ctx.send(embed=embed("Error", "No image attached."))
+        await ctx.send(embed=discord.Embed(title="Error",
+                                           description="No image attached.",
+                                           colour=discord.Color.blue()))
         return False
