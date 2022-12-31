@@ -16,3 +16,5 @@ SCORES = ['1-1-1', '2-1-1', '2-1-2', '2-1-3']
 for i in range(0, 15):
     for j in range(0, 15):
         SCORES.append(f'{i}-{j}')
+
+IMAGE_TYPES = ('.jpg', '.png', '.jpeg')

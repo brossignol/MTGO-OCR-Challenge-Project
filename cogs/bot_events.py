@@ -10,8 +10,7 @@ class BotEvents(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        """Message the bot sends on startup"""
-
+        """Bot statup message."""
         print("I am ready to read images!")
 
     @commands.Cog.listener()
@@ -29,7 +28,7 @@ class BotEvents(commands.Cog):
             await ctx.send(embed=embed)
 
         else:
-            # print(error)  # used for debugbing / testing
+            # print(error)  # used for debugging / testing
             return  # silent failure for anything else.
 
 
