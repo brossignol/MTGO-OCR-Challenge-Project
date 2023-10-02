@@ -6,7 +6,7 @@ from .config import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY
 from .utils import get_best_match_score, get_best_match_username
 
 
-def run_easyocr() -> list:
+def run_easyocr(image_path=IMAGE_PATH) -> list:
     """This reads the uploaded image using
     easyocr and returns the easyocr generated
     list of tuples. It uses some preprocessing
@@ -14,7 +14,7 @@ def run_easyocr() -> list:
     to improve accuracy."""
 
     # Resize Image
-    img = cv2.imread(IMAGE_PATH, cv2.IMREAD_UNCHANGED)
+    img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
     ratio = 2
     width = int(ratio * img.shape[1])
     height = int(ratio * img.shape[0])
