@@ -33,6 +33,8 @@
 
 ![image](https://user-images.githubusercontent.com/82344270/166079889-b212033a-c2a2-4bf7-95b3-fd81fc79ee0a.png) ![image](https://user-images.githubusercontent.com/82344270/154863495-8dac9277-dd93-48e4-84d3-7b73a1cfcc02.png)
 
+A video showing a demo and process of building this code / bot can be seen here: https://www.youtube.com/watch?v=a6f8ACJ9HmM
+
 
 ## Setup steps
   1. Clone the repository to your local machine. This repository uses pipenv to manage environments and dependencies. More information about pipenv and how to use it can be found here: https://realpython.com/pipenv-guide/
@@ -66,7 +68,7 @@
  
 The MIT License (MIT)
 
-Copyright (c) 2022 Raptor56
+Copyright (c) 2023 Raptor56
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

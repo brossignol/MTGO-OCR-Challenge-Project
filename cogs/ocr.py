@@ -1,5 +1,6 @@
 import easyocr
 import cv2
+import asyncio
 import difflib
 from .config import IMAGE_PATH, IMAGE_RESIZED, IMAGE_GRAY
 from .utils import get_best_match_score, get_best_match_username
@@ -33,6 +34,12 @@ def run_easyocr() -> list:
     reader = easyocr.Reader(['en'])
     results = reader.readtext(IMAGE_RESIZED)
     return sort_eacyocr(results, im_bw)
+
+
+async def run_async_easyocr() -> list:
+    """This creates a seperate thread for this function
+    to run on to prevent blocking in discord."""
+    return await asyncio.to_thread(run_easyocr)
 
 
 def sort_eacyocr(results: list, im_bw: object) -> list:

@@ -1,4 +1,5 @@
-from .config import SCORES, USERLIST
+import discord
+from .config import SCORES, USERLIST, IMAGE_TYPES
 import difflib
 
 
@@ -72,3 +73,23 @@ def get_best_match_username_standings(name: str, possibilities):
         return possibilities[best_match[0]], True
     else:
         return name, False
+
+
+async def image_input_validation(ctx) -> bool:
+    """Determines if input is valid."""
+    try:
+        image_url = ctx.message.attachments[0].url
+        if image_url.endswith(IMAGE_TYPES):
+            await ctx.message.attachments[0].save("image.png")
+            return True
+        else:
+            await ctx.send(embed=discord.Embed(
+                                    title="Error",
+                                    description="The attachment provided was not an image.",
+                                    colour=discord.Color.blue()))
+            return False
+    except IndexError:
+        await ctx.send(embed=discord.Embed(title="Error",
+                                           description="No image attached.",
+                                           colour=discord.Color.blue()))
+        return False
