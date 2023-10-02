@@ -79,7 +79,7 @@ async def image_input_validation(ctx) -> bool:
     """Determines if input is valid."""
     try:
         image_url = ctx.message.attachments[0].url
-        if image_url.endswith(IMAGE_TYPES):
+        if image_url.split('?')[0].endswith(IMAGE_TYPES):
             await ctx.message.attachments[0].save("image.png")
             return True
         else:

@@ -49,9 +49,8 @@ class BotCommands(commands.Cog):
         """This takes in the image for mtgo standings,
         and generates the csv for it."""
         try:
-            image_url = ctx.message.attachments[0].url
-            if (image_url[0:26] == 'https://cdn.discordapp.com' and
-               image_url.split('?')[0].endswith(('.jpg', '.png', '.jpeg'))):
+            valid_input = await image_input_validation(ctx)
+            if valid_input:
                 await ctx.send(embed=discord.Embed(
                     title="Success",
                     description="Your image will be read. Please wait.",
