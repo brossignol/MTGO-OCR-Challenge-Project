@@ -3,6 +3,8 @@ from discord.ext import commands
 from decouple import config
 from cogs.ocr import display_output, run_async_easyocr, generate_csv
 from cogs.sheetapi import load_csv_sheet, clear_sheet
+from .fix_standings import fix_standings
+from .ocr_multicolumn import run_easyocr_multi
 from .utils import image_input_validation
 
 
@@ -49,7 +51,7 @@ class BotCommands(commands.Cog):
         try:
             image_url = ctx.message.attachments[0].url
             if (image_url[0:26] == 'https://cdn.discordapp.com' and
-               image_url.endswith(('.jpg', '.png', '.jpeg'))):
+               image_url.split('?')[0].endswith(('.jpg', '.png', '.jpeg'))):
                 await ctx.send(embed=discord.Embed(
                     title="Success",
                     description="Your image will be read. Please wait.",
