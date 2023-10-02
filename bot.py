@@ -9,8 +9,8 @@ async def main():
     """This is the main method for the bot. It creates the bot,
     and loads in the commands and events from the cogs directory."""
 
-    intents = discord.Intents.all()
-    intents.members = True
+    intents = discord.Intents.default()
+    intents.message_content = True
     bot = commands.Bot(command_prefix="!", intents=intents)
     bot.remove_command("help")
 
