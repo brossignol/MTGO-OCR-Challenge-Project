@@ -48,44 +48,31 @@ class BotCommands(commands.Cog):
     async def read_full_standings(self, ctx):
         """This takes in the image for mtgo standings,
         and generates the csv for it."""
-        try:
-            valid_input = await image_input_validation(ctx)
-            if valid_input:
-                await ctx.send(embed=discord.Embed(
-                    title="Success",
-                    description="Your image will be read. Please wait.",
-                    colour=discord.Color.blue()
-                ))
-                await ctx.message.attachments[0].save('image.png')
-                try:
-                    run_easyocr_multi()
-                    clear_sheet()
-                    load_csv_sheet()
-                    await ctx.send("Here is what I found.")
-                    await ctx.send(file=discord.File('image-displayed.png'))
-                    await ctx.send(file=discord.File('output.csv'))
-                    description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
-                                   "\n\nYou can copy paste this into the data collection sheet." +
-                                   "\nNOTE: I may have missed the highlighted name in the image."
-                                   "\nPlease review before copying.")
-                    embed = discord.Embed(description=description, colour=discord.Color.blue())
-                    file = discord.File("assets/google-sheets-logo.png")
-                    embed.set_thumbnail(url='attachment://google-sheets-logo.png')
-                    await ctx.send(embed=embed, file=file)
-                except Exception as e:
-                    await ctx.send("failed", str(e))
-            else:
-                await ctx.send(discord.Embed(
-                    title="Error",
-                    description="The attachment provided was not an image.",
-                    colour=discord.Color.blue()
-                ))
-        except IndexError:
+        valid_input = await image_input_validation(ctx)
+        if valid_input:
             await ctx.send(embed=discord.Embed(
-                title="Error",
-                description="No image attached.",
+                title="Success",
+                description="Your image will be read. Please wait.",
                 colour=discord.Color.blue()
             ))
+            await ctx.message.attachments[0].save('image.png')
+            try:
+                run_easyocr_multi()
+                clear_sheet()
+                load_csv_sheet()
+                await ctx.send("Here is what I found.")
+                await ctx.send(file=discord.File('image-displayed.png'))
+                await ctx.send(file=discord.File('output.csv'))
+                description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
+                               "\n\nYou can copy paste this into the data collection sheet." +
+                               "\nNOTE: I may have missed the highlighted name in the image."
+                               "\nPlease review before copying.")
+                embed = discord.Embed(description=description, colour=discord.Color.blue())
+                file = discord.File("assets/google-sheets-logo.png")
+                embed.set_thumbnail(url='attachment://google-sheets-logo.png')
+                await ctx.send(embed=embed, file=file)
+            except Exception as e:
+                await ctx.send("failed", str(e))
 
     @commands.command(aliases=['fix'])
     async def fix_full_standings(self, ctx):
@@ -102,6 +89,8 @@ class BotCommands(commands.Cog):
                 url = '/'.join(s[:-1]) + '/edit?usp=sharing'
                 _, message = fix_standings(url)
                 load_csv_sheet()
+                if len(message) > 2000:
+                    message = message[:2000 - 4] + '\n...'
                 await ctx.send(message)
                 await ctx.send(file=discord.File('output.csv'))
                 description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
