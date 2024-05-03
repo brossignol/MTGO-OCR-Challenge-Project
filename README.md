@@ -1,4 +1,7 @@
 # MTGO-OCR-Challenge-Project
+  This forked version implements reading of the standings. It is currently in use for Vintage MTGO challenges parsing.
+  More info at [MTGO Vintage Discord](https://discord.gg/2eVcsjK).
+    
   This uses OCR to assist with data collection of MTGO challenges and other high stake events.  
   Credit to Raptor56, PProteus, Zodiak, and Steb for working on the pauper data collection / coding over the years.  
   Additional thank you to all of those who take the time to fill out the data sheets every week. Without you 
@@ -55,14 +58,6 @@ A video showing a demo and process of building this code / bot can be seen here:
   
 
   5. Finally, running 'python bot.py' should get your local instance up and running!
-
-## Future Implmenetations
-  Full image ocr is in the works. An example of what this will look like in the future can be seen below.
-  
-  ![data](https://user-images.githubusercontent.com/82344270/141873248-74b5c1ec-40de-4e42-b7b4-516aa8a55b96.png)
-  
-  ![image](https://user-images.githubusercontent.com/82344270/141875261-3f64ba44-2aa1-44ea-9aad-4fe0572e8ee0.png)
-
 
 ## License
  
