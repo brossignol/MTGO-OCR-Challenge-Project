@@ -1,5 +1,9 @@
+# Notice
+  This project is outdated. You may consider [MTGO-log-parser](https://github.com/brossignol/MTGO-log-parser) before, which 
+  retrives the same information based on the mtgo.exe logs. It is easier to use and doesn't have the OCR reading issues.
+
 # MTGO-OCR-Challenge-Project
-  This forked version implements reading of the standings. It is currently in use for Vintage MTGO challenges parsing.
+  This forked version implements reading of the standings. It was used for Vintage MTGO challenges parsing.
   More info at [MTGO Vintage Discord](https://discord.gg/2eVcsjK).
     
   This uses OCR to assist with data collection of MTGO challenges and other high stake events.  
